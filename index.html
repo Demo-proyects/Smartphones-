@@ -1,247 +1,96 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VERTEX — Tienda de Smartphones Premium en RD</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
-
 <script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        'vertex-black': '#0a0a0a',
-        'vertex-gray': '#1a1a1a',
-        'vertex-accent': '#3b82f6',
-      },
-      fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-      },
-    }
-  }
-}
+  tailwind.config = { theme: { extend: { colors: { 'vertex-black': '#0a0a0a', 'vertex-gray': '#1a1a1a', 'vertex-accent': '#3b82f6' }, fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } } }
 </script>
-
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: 'Inter', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  background: #0a0a0a;
-  color: #ffffff;
-}
-html { scroll-behavior: smooth; }
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.5); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(59, 130, 246, 0.6); }
-.nav-link {
-  position: relative;
-  transition: color 0.3s ease;
-}
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: currentColor;
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.nav-link:hover::after { width: 100%; }
-.gradient-text {
-  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.phone-card { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-.phone-card:hover { transform: translateY(-8px); }
-.magnetic-btn { position: relative; transition: transform 0.2s ease; }
-.theme-icon { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-.reveal { opacity: 1; transform: translateY(0); }
-.reveal-left { opacity: 1; transform: translateX(0); }
-.reveal-right { opacity: 1; transform: translateX(0); }
-.reveal-scale { opacity: 1; transform: scale(1); }
-.product-grid { display: grid; gap: 2rem; }
-@media (min-width: 640px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
-.immersive-bg { position: relative; overflow: hidden; }
-.immersive-bg::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
-  pointer-events: none;
-}
-::selection { background: rgba(59, 130, 246, 0.2); }
-.loading-shimmer {
-  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-}
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.375rem 0.875rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.025em;
-  text-transform: uppercase;
-}
-.price { font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
-.separator {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, currentColor, transparent);
-  opacity: 0.1;
-}
-.feature-icon {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  background: rgba(59, 130, 246, 0.1);
-  transition: all 0.3s ease;
-}
-.feature-icon:hover {
-  background: rgba(59, 130, 246, 0.15);
-  transform: translateY(-2px);
-}
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 100%;
-  height: 100vh;
-  background: #0a0a0a;
-  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 999;
-}
-.mobile-menu.active { right: 0; }
-.stat-number { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum'; }
-.aspect-phone { aspect-ratio: 9 / 16; }
-.aspect-square { aspect-ratio: 1 / 1; }
-.aspect-wide { aspect-ratio: 16 / 9; }
-.overlay-gradient { background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.95) 100%); }
-.hero-bg-pattern {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
-}
-.cart-badge {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: #ef4444;
-  color: white;
-  font-size: 0.75rem;
-  font-weight: 600;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ecommerce-grid {
-  display: grid;
-  gap: 1.25rem;
-  grid-template-columns: repeat(2, 1fr);
-}
-@media (min-width: 768px) {
-  .ecommerce-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-}
-@media (min-width: 1024px) {
-  .ecommerce-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-}
-.product-card {
-  background: #1a1a1a;
-  border-radius: 1rem;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255,255,255,0.05);
-}
-.product-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
-.product-image-container {
-  position: relative;
-  width: 100%;
-  height: 240px;
-  overflow: hidden;
-  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-}
-.product-image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-.product-card:hover .product-image-container img { transform: scale(1.1); }
-.stock-badge {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  background: rgba(16, 185, 129, 0.9);
-  color: white;
-  backdrop-filter: blur(10px);
-}
-.stock-badge.limited { background: rgba(245, 158, 11, 0.9); }
-.stock-badge.out { background: rgba(239, 68, 68, 0.9); }
-.add-to-cart {
-  width: 100%;
-  padding: 0.75rem;
-  background: white;
-  color: #0a0a0a;
-  font-weight: 600;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-}
-.add-to-cart:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-}
-.add-to-cart:disabled { opacity: 0.5; cursor: not-allowed; }
-@keyframes revealUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.reveal-card {
-  opacity: 0;
-  animation: revealUp 0.6s ease-out forwards;
-}
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; background: #0a0a0a; color: #ffffff; }
+  html { scroll-behavior: smooth; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(59, 130, 246, 0.5); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(59, 130, 246, 0.6); }
+  .nav-link { position: relative; transition: color 0.3s ease; }
+  .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: currentColor; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+  .nav-link:hover::after { width: 100%; }
+  .gradient-text { background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .phone-card { transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+  .phone-card:hover { transform: translateY(-8px); }
+  .magnetic-btn { position: relative; transition: transform 0.2s ease; }
+  .theme-icon { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+  .reveal { opacity: 1; transform: translateY(0); }
+  .reveal-left, .reveal-right { opacity: 1; transform: translateX(0); }
+  .reveal-scale { opacity: 1; transform: scale(1); }
+  .product-grid { display: grid; gap: 2rem; }
+  @media (min-width: 640px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
+  .immersive-bg { position: relative; overflow: hidden; }
+  .immersive-bg::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%); pointer-events: none; }
+  ::selection { background: rgba(59, 130, 246, 0.2); }
+  .loading-shimmer { background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent); background-size: 200% 100%; animation: shimmer 2s infinite; }
+  @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+  .badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.375rem 0.875rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.025em; text-transform: uppercase; }
+  .price { font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .separator { height: 1px; background: linear-gradient(90deg, transparent, currentColor, transparent); opacity: 0.1; }
+  .feature-icon { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 12px; background: rgba(59, 130, 246, 0.1); transition: all 0.3s ease; }
+  .feature-icon:hover { background: rgba(59, 130, 246, 0.15); transform: translateY(-2px); }
+  .mobile-menu { position: fixed; top: 0; right: -100%; width: 100%; height: 100vh; background: #0a0a0a; transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 999; }
+  .mobile-menu.active { right: 0; }
+  .stat-number { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum'; }
+  .aspect-phone { aspect-ratio: 9 / 16; } .aspect-square { aspect-ratio: 1 / 1; } .aspect-wide { aspect-ratio: 16 / 9; }
+  .overlay-gradient { background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.95) 100%); }
+  .hero-bg-pattern { position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%); }
+  .cart-badge { position: absolute; top: -8px; right: -8px; background: #ef4444; color: white; font-size: 0.75rem; font-weight: 600; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .ecommerce-grid { display: grid; gap: 1.25rem; grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 768px) { .ecommerce-grid { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; } }
+  @media (min-width: 1024px) { .ecommerce-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; } }
+  .product-card { background: #1a1a1a; border-radius: 1rem; overflow: hidden; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.05); }
+  .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+  .product-image-container { position: relative; width: 100%; height: 240px; overflow: hidden; background: linear-gradient(135deg, #1f2937 0%, #111827 100%); }
+  .product-image-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+  .product-card:hover .product-image-container img { transform: scale(1.1); }
+  .stock-badge { position: absolute; top: 12px; left: 12px; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: rgba(16, 185, 129, 0.9); color: white; backdrop-filter: blur(10px); }
+  .stock-badge.limited { background: rgba(245, 158, 11, 0.9); } .stock-badge.out { background: rgba(239, 68, 68, 0.9); }
+  .add-to-cart { width: 100%; padding: 0.75rem; background: white; color: #0a0a0a; font-weight: 600; border-radius: 0.5rem; transition: all 0.3s ease; border: none; cursor: pointer; }
+  .add-to-cart:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+  .add-to-cart:disabled { opacity: 0.5; cursor: not-allowed; }
+  @keyframes revealUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal-card { opacity: 0; animation: revealUp 0.6s ease-out forwards; }
+  .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; } .delay-3 { animation-delay: 0.3s; }
+  /* Modal Animations & Styles */
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
+  .modal-overlay { animation: fadeIn 0.4s ease-out; }
+  .modal-content { animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+  .luxury-gradient { background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%); }
+  .audio-player-luxury { background: linear-gradient(180deg, #181818 0%, #121212 100%); }
+  audio { display: none; }
+  .gradient-text { background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6); background-size: 300% 100%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gradientFlow 4s ease infinite; }
+  @keyframes gradientFlow { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+  /* Shop Updates */
+  .filters-container { display: flex; gap: 0.75rem; overflow-x: auto; padding: 0.5rem; scrollbar-width: none; -ms-overflow-style: none; }
+  .filters-container::-webkit-scrollbar { display: none; }
+  .filter-btn { flex-shrink: 0; white-space: nowrap; transition: all 0.3s ease; }
+  .active-filter { background: white !important; color: black !important; border: none !important; box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1); }
+  @media (min-width: 640px) and (max-width: 1023px) { .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; } }
+  @media (min-width: 1024px) { .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .product-card { opacity: 1 !important; transform: none !important; animation: none !important; background: rgba(26, 26, 26, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.3s ease; }
+  .product-card:hover { border-color: rgba(255, 255, 255, 0.2); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); transform: translateY(-4px); }
+  .product-image-container { position: relative; width: 100%; height: 260px; background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); display: flex; align-items: center; justify-content: center; padding: 1.5rem; overflow: hidden; }
+  .product-image-container img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+  .product-card:hover .product-image-container img { transform: scale(1.08); }
+  .product-specs { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.5rem; }
+  .stock-badge { position: absolute; top: 12px; left: 12px; z-index: 10; backdrop-filter: blur(10px); }
+  .no-results { grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; background: rgba(26, 26, 26, 0.5); border-radius: 1rem; border: 1px solid rgba(255, 255, 255, 0.1); }
+  .price { background: linear-gradient(135deg, #ffffff 0%, #d1d5db 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 </style>
 </head>
 <body>
@@ -259,51 +108,24 @@ html { scroll-behavior: smooth; }
           <a href="#contacto" class="nav-link text-xs font-bold uppercase tracking-widest hover:opacity-50 transition-opacity">Ubicación</a>
         </div>
       </div>
-
       <div class="flex items-center gap-3 lg:gap-6">
         <button id="cart-btn" class="relative w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/5 transition-colors">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-          </svg>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
         </button>
-
-        <a href="https://wa.me/18098786115" 
-           target="_blank" 
-           rel="noopener noreferrer" 
-           class="hidden md:inline-flex items-center justify-center px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.15em] bg-white text-black hover:scale-105 active:scale-95 transition-all">
-          Contacto
-        </a>
-
+        <a href="https://wa.me/18098786115" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex items-center justify-center px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.15em] bg-white text-black hover:scale-105 active:scale-95 transition-all">Contacto</a>
         <button id="mobile-menu-btn" class="md:hidden w-10 h-10 rounded-full flex items-center justify-center bg-white/5">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
         </button>
       </div>
     </div>
   </div>
 </nav>
-
 <script>
-  window.addEventListener('load', () => {
-    gsap.to("#main-nav", { 
-      y: 0, 
-      opacity: 1, 
-      duration: 0.8, 
-      ease: "expo.out",
-      delay: 0.2 
-    });
-  });
-
+  window.addEventListener('load', () => { gsap.to("#main-nav", { y: 0, opacity: 1, duration: 0.8, ease: "expo.out", delay: 0.2 }); });
   window.addEventListener('scroll', () => {
     const nav = document.getElementById('main-nav');
-    if (window.scrollY > 40) {
-      nav.classList.add('backdrop-blur-xl', 'bg-black/80', 'border-white/5');
-      nav.classList.remove('border-transparent');
-    } else {
-      nav.classList.remove('backdrop-blur-xl', 'bg-black/80', 'border-white/5');
-      nav.classList.add('border-transparent');
-    }
+    if (window.scrollY > 40) { nav.classList.add('backdrop-blur-xl', 'bg-black/80', 'border-white/5'); nav.classList.remove('border-transparent'); }
+    else { nav.classList.remove('backdrop-blur-xl', 'bg-black/80', 'border-white/5'); nav.classList.add('border-transparent'); }
   });
 </script>
 
@@ -312,48 +134,24 @@ html { scroll-behavior: smooth; }
     <img src="img/fondo.png" alt="Background" class="w-full h-full object-cover">
     <div class="absolute inset-0 bg-black/60 backdrop-blur-md"></div>
   </div>
-
   <div class="relative z-10 h-full flex flex-col p-8">
     <div class="flex items-center justify-between mb-16">
       <span class="text-2xl font-black tracking-tighter text-white">VERTEX</span>
       <button id="close-mobile-menu" class="group w-12 h-12 rounded-full border border-white/20 flex items-center justify-center bg-white/10 hover:bg-white/20 transition-all">
-        <svg class="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
+        <svg class="w-6 h-6 text-white group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
     </div>
-
     <nav class="flex flex-col gap-6">
-      <a href="#inicio" class="group flex items-center gap-4 text-4xl font-light text-white/70 hover:text-white transition-colors mobile-link">
-        <span class="text-xs font-mono text-white/30 group-hover:text-white transition-colors">01</span>
-        Inicio
-      </a>
-      <a href="#tienda" class="group flex items-center gap-4 text-4xl font-light text-white/70 hover:text-white transition-colors mobile-link">
-        <span class="text-xs font-mono text-white/30 group-hover:text-white transition-colors">02</span>
-        Tienda
-      </a>
-      <a href="#ofertas" class="group flex items-center gap-4 text-4xl font-light text-white/70 hover:text-white transition-colors mobile-link">
-        <span class="text-xs font-mono text-white/30 group-hover:text-white transition-colors">03</span>
-        Ofertas
-      </a>
-      <a href="#envios" class="group flex items-center gap-4 text-4xl font-light text-white/70 hover:text-white transition-colors mobile-link">
-        <span class="text-xs font-mono text-white/30 group-hover:text-white transition-colors">04</span>
-        Envíos
-      </a>
-      <a href="#contacto" class="group flex items-center gap-4 text-4xl font-light text-white/70 hover:text-white transition-colors mobile-link">
-        <span class="text-xs font-mono text-white/30 group-hover:text-white transition-colors">05</span>
-        Ubicación
-      </a>
+      <a href="#inicio" class="group flex items-center gap-4 text-4xl font-light text-white/70 hover:text-white transition-colors mobile-link"> <span class="text-xs font-mono text-white/30 group-hover:text-white transition-colors">01</span> Inicio </a>
+      <a href="#tienda" class="group flex items-center gap-4 text-4xl font-light text-white/70 hover:text-white transition-colors mobile-link"> <span class="text-xs font-mono text-white/30 group-hover:text-white transition-colors">02</span> Tienda </a>
+      <a href="#ofertas" class="group flex items-center gap-4 text-4xl font-light text-white/70 hover:text-white transition-colors mobile-link"> <span class="text-xs font-mono text-white/30 group-hover:text-white transition-colors">03</span> Ofertas </a>
+      <a href="#envios" class="group flex items-center gap-4 text-4xl font-light text-white/70 hover:text-white transition-colors mobile-link"> <span class="text-xs font-mono text-white/30 group-hover:text-white transition-colors">04</span> Envíos </a>
+      <a href="#contacto" class="group flex items-center gap-4 text-4xl font-light text-white/70 hover:text-white transition-colors mobile-link"> <span class="text-xs font-mono text-white/30 group-hover:text-white transition-colors">05</span> Ubicación </a>
     </nav>
-
     <div class="mt-auto pt-10 border-t border-white/10">
       <p class="text-white/40 text-sm mb-4 uppercase tracking-widest">¿Necesitas ayuda?</p>
-      <a href="https://wa.me/18098786115" 
-         target="_blank" 
-         rel="noopener noreferrer" 
-         class="inline-flex items-center justify-center w-full py-4 bg-green-500 hover:bg-green-400 text-black font-bold rounded-2xl transition-all shadow-lg shadow-green-500/20 active:scale-95">
-        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
-        Hablar por WhatsApp
+      <a href="https://wa.me/18098786115" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full py-4 bg-green-500 hover:bg-green-400 text-black font-bold rounded-2xl transition-all shadow-lg shadow-green-500/20 active:scale-95">
+        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg> Hablar por WhatsApp
       </a>
     </div>
   </div>
@@ -366,19 +164,23 @@ html { scroll-behavior: smooth; }
   </div>
 
   <div class="container mx-auto px-4 sm:px-6 lg:px-20 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-    <div class="max-w-2xl text-left"> <div class="overflow-hidden">
-        <h1 class="hero-title text-5xl md:text-7xl lg:text-7xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-500">
+    <div class="max-w-2xl text-left">
+      <div class="overflow-hidden">
+        <h1 class="hero-title opacity-0 text-5xl md:text-7xl lg:text-7xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-gray-100 to-gray-500">
           iPhone 11 Pro
         </h1>
       </div>
+      
       <div class="overflow-hidden">
-        <h2 class="hero-subtitle text-xl md:text-3xl lg:text-3xl font-semibold mb-6 leading-tight">
+        <h2 class="hero-subtitle opacity-0 text-xl md:text-3xl lg:text-3xl font-semibold mb-6 leading-tight">
           Pro cameras. Pro display.<br>Pro Performance.
         </h2>
       </div>
+
       <p class="hero-description text-gray-400 text-sm md:text-base max-w-md mb-10 leading-relaxed opacity-0">
         Un sistema de triple cámara transformador que añade muchísimas capacidades sin complejidad. Un salto sin precedentes en la duración de la batería.
       </p>
+
       <div class="hero-cta opacity-0">
         <a href="#" class="inline-block px-10 py-3 border border-white rounded-full text-sm font-medium hover:bg-white hover:text-black transition-all duration-300">
           Comprar
@@ -400,1224 +202,473 @@ html { scroll-behavior: smooth; }
 
 <script>
   window.addEventListener('load', () => {
-    const tl = gsap.timeline({ defaults: { ease: "expo.out", duration: 1.5 } });
+    // Definimos la línea de tiempo principal (Hero)
+    const tl = gsap.timeline({ 
+      defaults: { ease: "expo.out", duration: 1.5 } 
+    });
 
+    // --- Animación Hero (Tu código original) ---
     tl.to("#main-nav", { y: 0, opacity: 1, duration: 0.8 }, 0.2)
       .to(".hero-img", { scale: 1, duration: 2.5, ease: "power2.inOut" }, 0)
-      .from(".hero-title", { y: 100, skewY: 5, opacity: 0, stagger: 0.1 }, 0.4)
-      .from(".hero-subtitle", { y: 50, opacity: 0 }, "-=1.2")
-      .to(".hero-description, .hero-cta", { y: 0, opacity: 1, stagger: 0.1, duration: 1 }, "-=1")
+      .fromTo(".hero-title", 
+        { y: 100, skewY: 7, opacity: 0 }, 
+        { y: 0, skewY: 0, opacity: 1, stagger: 0.1 }, 
+        0.4
+      )
+      .fromTo(".hero-subtitle", 
+        { y: 50, opacity: 0 }, 
+        { y: 0, opacity: 1 }, 
+        "-=1.2"
+      )
+      .to(".hero-description, .hero-cta", { 
+        y: 0, 
+        opacity: 1, 
+        stagger: 0.1, 
+        duration: 1 
+      }, "-=1")
       .to(".hero-scroll-indicator", { opacity: 1, duration: 0.8 }, "-=0.8")
       .to(".progress-bar", { x: "-75%", duration: 1.5 }, "-=0.5");
 
+
+    // --- Lógica de Menú Mobile (MODIFICADA) ---
     const mobileBtn = document.getElementById('mobile-menu-btn');
     const closeBtn = document.getElementById('close-mobile-menu');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileLinks = document.querySelectorAll('.mobile-link');
 
+    // ### 1. Aseguramos el estado inicial con GSAP
+    // Esto previene conflictos con clases de Tailwind y asegura que empiece oculto.
+    if (mobileMenu) {
+        gsap.set(mobileMenu, { x: "100%" }); 
+    }
+
+    // ### 2. Nueva función toggle usando GSAP
     const toggleMenu = (open) => {
-      mobileMenu.classList.toggle('translate-x-full', !open);
-      mobileMenu.classList.toggle('translate-x-0', open);
+      if (!mobileMenu) return;
+      
+      if (open) {
+        // Abrir menú
+        gsap.to(mobileMenu, {
+            x: "0%",
+            duration: 0.6,
+            ease: "power3.out", // Entrada suave
+            overwrite: true // Asegura que si se spamea el click, no se rompa
+        });
+      } else {
+        // Cerrar menú
+        gsap.to(mobileMenu, {
+            x: "100%",
+            duration: 0.5,
+            ease: "power3.in", // Salida acelerando suavemente
+            overwrite: true
+        });
+      }
     };
 
-    mobileBtn.addEventListener('click', () => toggleMenu(true));
-    closeBtn.addEventListener('click', () => toggleMenu(false));
-    mobileLinks.forEach(link => link.addEventListener('click', () => toggleMenu(false)));
-
-    window.addEventListener('scroll', () => {
-      const nav = document.getElementById('main-nav');
-      if (window.scrollY > 40) {
-        nav.classList.add('backdrop-blur-xl', 'bg-black/80', 'border-white/5');
-        nav.classList.remove('border-transparent');
-      } else {
-        nav.classList.remove('backdrop-blur-xl', 'bg-black/80', 'border-white/5');
-        nav.classList.add('border-transparent');
-      }
+    if (mobileBtn) mobileBtn.addEventListener('click', () => toggleMenu(true));
+    if (closeBtn) closeBtn.addEventListener('click', () => toggleMenu(false));
+    
+    // ### 3. Al hacer click en los enlaces, se llama a toggleMenu(false)
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            toggleMenu(false); // Esto activa la animación de salida de GSAP
+        });
     });
   });
 </script>
 
+<div id="infoModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-black/90 modal-overlay backdrop-blur-md">
+  <div class="modal-content luxury-gradient relative w-full max-w-5xl max-h-[95vh] sm:max-h-[90vh] rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-zinc-800/50">
+    <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
+    
+    <button onclick="closeModal()" class="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 w-10 h-10 flex items-center justify-center rounded-full bg-zinc-900/80 hover:bg-red-600 border border-zinc-700 transition-all duration-300 group">
+      <svg class="w-4 h-4 sm:w-5 sm:h-5 text-zinc-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
+
+    <div class="overflow-y-auto max-h-[calc(95vh-140px)] sm:max-h-[calc(90vh-150px)] custom-scrollbar">
+      <div class="p-5 sm:p-8 md:p-10 lg:p-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 mb-6">
+          <div class="relative"><div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div></div>
+          <span class="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-blue-400">Antes de ver la demo</span>
+        </div>
+        
+        <h2 class="text-xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-2 text-white">Un mensaje breve sobre <br>
+        <span class="text-xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-8 gradient-text">lo que están a punto de ver</span></h2>
+        
+        <div class="space-y-6 text-zinc-300">
+          <p class="text-xl sm:text-lg md:text-xl leading-relaxed font-light">Hola. Preparé esta demostración visual sin compromiso para que puedan experimentar, de primera mano, cómo se sentiría su marca en un entorno digital propio, fuera de las redes sociales.</p>
+          
+          <div class="luxury-divider my-6"></div>
+          
+          <p class="text-xl sm:text-lg md:text-xl leading-relaxed font-light">Probablemente se pregunte: "¿Por qué invertir en esto si ya estamos en Instagram?". Hay muchas razones, pero la principal es para acceder a un mercado con personas que ya tienen intención de comprar...</p>
+          
+          <div class="relative bg-zinc-950 px-6 py-12 sm:px-12 text-center border-y border-zinc-800">
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-6 text-9xl font-serif text-zinc-800/50 opacity-20 pointer-events-none">
+    &rdquo;
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-3xl space-y-6">
+    <p class="font-serif text-xl italic text-zinc-400 sm:text-2xl">
+      "Pagar publicidad en redes es pagar por mayor visibilidad y atención..."
+    </p>
+    
+    <div class="h-px w-16 bg-blue-500 mx-auto"></div>
+
+    <p class="text-xl font-black uppercase tracking-tight text-white sm:text-3xl lg:text-4xl">
+      Pagar publicidad en Google es pagar por <span class="text-blue-500">clientes que ya quieren comprar.</span>
+    </p>
+  </div>
+</div>
+
+          <p class="text-xl sm:text-lg md:text-xl leading-relaxed font-light">Esto abre la puerta a un mercado más rentable, más estable y más fácil de acceso que las redes sociales.</p>
+
+          <div class="mt-10 p-5 rounded-2xl bg-zinc-900/80 border border-zinc-800">
+            <div class="flex items-center justify-between gap-4 mb-3">
+              <div>
+                <h3 class="text-lg font-bold text-white">Su Aliado Digital</h3>
+                <p class="text-sm text-zinc-400">Desarrollador & Diseñador Web</p>
+              </div>
+              <div class="w-12 h-12 rounded-full bg-red-600 p-0.5 shadow-lg shadow-red-500/40">
+                <div class="w-full h-full rounded-full bg-white overflow-hidden flex items-center justify-center">
+                  <img src="img/logo.png" alt="Logo" class="w-full h-full object-cover">
+                </div>
+              </div>
+            </div>
+            <p class="text-sm text-zinc-300">Ahora pueden explorar la demo y visualizar cómo se presenta su oferta dentro de un sistema de captación profesional.</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <style>
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    
-    @keyframes slideDown {
-        from { 
-            opacity: 0;
-            transform: translateY(-50px);
-        }
-        to { 
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
+  /* Aplicar a toda la página */
+  html, body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE y Edge */
+  }
 
-    .modal-overlay {
-        animation: fadeIn 0.4s ease-out;
-    }
-
-    .modal-content {
-        animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    /* Luxury gradient background */
-    .luxury-gradient {
-        background: linear-gradient(180deg, 
-            #0a0a0a 0%, 
-            #1a1a1a 50%, 
-            #0a0a0a 100%
-        );
-    }
-
-    /* Spotify-style audio player */
-    .audio-player-luxury {
-        background: linear-gradient(180deg, #181818 0%, #121212 100%);
-    }
-
-    audio {
-        display: none;
-    }
-
-    /* Animated gradient text */
-    .gradient-text {
-        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
-        background-size: 300% 100%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation: gradientFlow 4s ease infinite;
-    }
-
-    @keyframes gradientFlow {
-        0%, 100% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-    }
+  /* Para navegadores basados en Webkit (Chrome, Safari, Brave) */
+  ::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+    height: 0 !important;
+  }
 </style>
-<!-- MODAL OVERLAY -->
-<div id="infoModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-black/90 modal-overlay backdrop-blur-md">
-    
-    <!-- Modal Content -->
-    <div class="modal-content luxury-gradient relative w-full max-w-5xl max-h-[95vh] sm:max-h-[90vh] rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden border border-zinc-800/50">
-        
-        <!-- Decorative top line -->
-        <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-transparent"></div>
 
-        <!-- Close Button -->
-        <button onclick="closeModal()" class="absolute top-3 right-3 sm:top-4 sm:right-4 md:top-5 md:right-5 z-30 w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-full bg-zinc-900/80 hover:bg-red-600 border border-zinc-700 hover:border-red-500 backdrop-blur-sm transition-all duration-300 group">
-            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-zinc-400 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-        </button>
-
-        <!-- Scrollable Content -->
-        <div class="overflow-y-auto max-h-[calc(95vh-140px)] sm:max-h-[calc(90vh-150px)] md:max-h-[calc(90vh-160px)] custom-scrollbar">
-            <div class="p-5 sm:p-8 md:p-10 lg:p-12">
-                
-                <!-- Badge with glow -->
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 mb-5 sm:mb-6 glow-on-hover transition-all duration-300">
-                    <div class="relative">
-                        <div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
-                        <div class="absolute inset-0 w-2 h-2 rounded-full bg-blue-500 animate-ping"></div>
-                    </div>
-                    <span class="text-[10px] sm:text-xs font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-blue-400">Antes de ver la demo</span>
-                </div>
-
-                <!-- Title -->
-                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-2 sm:mb-3 leading-[1.1] text-white">
-                    Un mensaje breve sobre
-                </h1>
-                <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-6 sm:mb-8 md:mb-10 leading-[1.1] gradient-text">
-                    lo que están a punto de ver
-                </h2>
-
-                <!-- Content with elegant typography -->
-                <div class="space-y-5 sm:space-y-6 md:space-y-7 text-zinc-300">
-                    
-                    <div class="space-y-3 sm:space-y-4">
-                        <p class="text-base sm:text-lg md:text-xl leading-relaxed font-light">
-                            Hola. Preparé esta demostración visual sin compromiso para que puedan experimentar, de primera mano, cómo se sentiría su marca en un entorno digital propio, fuera de las redes sociales.
-                        </p>
-                    </div>
-
-                    <div class="luxury-divider my-5 sm:my-6"></div>
-
-                    <div class="space-y-3 sm:space-y-4">
-                        <p class="text-base sm:text-lg md:text-xl leading-relaxed font-light">
-                            Probablemente se pregunte: "¿Por qué invertir en esto si ya estamos en Instagram?". Hay muchas razones, pero la principal es para acceder a un mercado con personas que ya tienen intención de comprar...
-                        </p>
-                    </div>
-
-                    <!-- Featured Quote - Luxury style -->
-                    <div class="relative my-6 sm:my-8 md:my-10 p-5 sm:p-7 md:p-10 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-950/30 to-purple-950/20 border border-blue-500/20 overflow-hidden">
-                        <div class="absolute -top-10 -right-10 w-32 h-32 sm:w-40 sm:h-40 bg-blue-500/10 rounded-full blur-3xl"></div>
-                        <div class="absolute -bottom-10 -left-10 w-32 h-32 sm:w-40 sm:h-40 bg-purple-500/10 rounded-full blur-3xl"></div>
-                        
-                        <div class="relative">
-                            <div class="mb-4 sm:mb-5">
-                                <svg class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-blue-500/40" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                                </svg>
-                            </div>
-                            <p class="text-white text-lg sm:text-xl md:text-2xl lg:text-3xl font-light leading-relaxed mb-0">
-                                Pagar publicidad en redes es pagar por atención.<br class="hidden sm:block">
-                                <span class="font-semibold text-blue-400">Pagar publicidad en Google es pagar por clientes que ya quieren comprar.</span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="space-y-3 sm:space-y-4">
-                        <p class="text-base sm:text-lg md:text-xl leading-relaxed font-light">
-                            Esto abre la puerta a un mercado más rentable, más estable y más fácil de acceso que las redes sociales. Esta demostración muestra cómo acceder a él con un sistema de conversación fácil de gestionar.
-                        </p>
-                    </div>
-
-                    <div class="luxury-divider my-5 sm:my-6"></div>
-
-                    <!-- Author Card - Luxury style con logo alineado -->
-                    <div class="mt-6 sm:mt-8 md:mt-10 p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl bg-gradient-to-br from-zinc-900/80 to-zinc-900/40 border border-zinc-800/80 backdrop-blur-sm">
-                        <!-- Header con título/subtítulo y logo -->
-                        <div class="flex items-center justify-between gap-4 mb-3">
-                            <!-- Título y subtítulo -->
-                            <div class="flex-1 min-w-0">
-                                <div class="flex items-center gap-2 mb-0.5">
-                                    <h3 class="text-base sm:text-lg font-bold text-white">Su Aliado Digital</h3>
-                                    <div class="w-1.5 h-1.5 rounded-full bg-red-500"></div>
-                                </div>
-                                <p class="text-xs sm:text-sm text-zinc-400">Desarrollador & Diseñador Web</p>
-                            </div>
-                            
-                            <!-- Logo -->
-                            <div class="relative flex-shrink-0">
-                                <!-- Logo container -->
-                                <div class="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-red-600 via-red-500 to-red-700 p-0.5 shadow-lg shadow-red-500/40">
-                                    <div class="w-full h-full rounded-full bg-white overflow-hidden flex items-center justify-center">
-                                        <img src="img/logo.png" 
-                                             alt="Logo" 
-                                             class="w-full h-full object-cover"
-                                             onerror="this.onerror=null; this.parentElement.innerHTML='<svg class=\'w-6 h-6 sm:w-7 sm:h-7 text-red-600\' fill=\'currentColor\' viewBox=\'0 0 24 24\'><path d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/></svg>';">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Texto descriptivo debajo -->
-                        <p class="text-xs sm:text-sm text-zinc-300 leading-relaxed">
-                            Ahora pueden explorar la demo y visualizar cómo se presenta su oferta dentro de un sistema de captación profesional.
-                        </p>
-                    </div>
-
-                </div>
-            </div>
+    <div class="audio-player-luxury sticky bottom-0 left-0 right-0 border-t border-zinc-800/50 p-4 sm:p-5 backdrop-blur-xl bg-black/40">
+      <div class="max-w-6xl mx-auto">
+        <div class="mb-4 group">
+          <div class="flex items-center justify-between text-[10px] text-zinc-500 mb-1.5">
+            <span id="currentTime">0:00</span>
+            <span id="duration">0:00</span>
+          </div>
+          <div class="relative w-full bg-zinc-800 rounded-full h-1 cursor-pointer" id="progressContainer">
+            <div id="progressBar" class="absolute top-0 left-0 h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-500" style="width: 0%"></div>
+          </div>
         </div>
 
-        <!-- Fixed Audio Player - Spotify Style -->
-        <div class="audio-player-luxury sticky bottom-0 left-0 right-0 border-t border-zinc-800/50 p-3 sm:p-4 md:p-5 backdrop-blur-xl">
-            
-            <div class="max-w-6xl mx-auto">
-                
-                <!-- Progress Bar - Top -->
-                <div class="mb-3 sm:mb-4">
-                    <div class="flex items-center justify-between text-[10px] sm:text-xs text-zinc-500 font-medium mb-1.5 sm:mb-2">
-                        <span id="currentTime">0:00</span>
-                        <span id="duration">0:00</span>
-                    </div>
-                    <div class="relative w-full bg-zinc-800 rounded-full h-1.5 cursor-pointer group" id="progressContainer">
-                        <!-- Progress bar fixed with gradient animation -->
-                        <div id="progressBar" class="absolute top-0 left-0 h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-100 ease-linear" style="width: 0%"></div>
-                        <div class="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity" style="left: 0%" id="progressThumb"></div>
-                    </div>
-                </div>
-
-                <!-- Controls -->
-                <div class="flex items-center justify-between gap-2 sm:gap-3">
-                    
-                    <!-- Left: Track Info -->
-                    <div class="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0">
-                            <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
-                            </svg>
-                        </div>
-                        <div class="min-w-0 flex-1 hidden sm:block">
-                            <p class="text-white font-semibold text-xs sm:text-sm truncate">Mensaje Explicativo</p>
-                            <p class="text-zinc-500 text-[10px] sm:text-xs truncate">Su Aliado Digital</p>
-                        </div>
-                    </div>
-
-                    <!-- Center: Play Controls -->
-                    <div class="flex items-center gap-1.5 sm:gap-2 md:gap-3">
-                        
-                        <!-- Speed Control (1x / 1.5x) -->
-                        <button id="speedBtn" onclick="toggleSpeed()" class="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center rounded-full bg-zinc-800 hover:bg-zinc-700 transition-colors border border-zinc-700">
-                            <span id="speedText" class="text-xs sm:text-sm font-bold text-white">1×</span>
-                        </button>
-
-                        <!-- Previous (decorative) -->
-                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full hover:bg-zinc-800 transition-colors">
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-zinc-400" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
-                            </svg>
-                        </button>
-
-                        <!-- Play/Pause -->
-                        <button id="playBtn" onclick="togglePlay()" class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white hover:bg-zinc-200 hover:scale-105 flex items-center justify-center transition-all duration-300 shadow-lg">
-                            <svg id="playIcon" class="w-4 h-4 sm:w-5 sm:h-5 text-black ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z"/>
-                            </svg>
-                            <svg id="pauseIcon" class="w-4 h-4 sm:w-5 sm:h-5 text-black hidden" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
-                            </svg>
-                        </button>
-
-                        <!-- Next (decorative) -->
-                        <button class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full hover:bg-zinc-800 transition-colors">
-                            <svg class="w-4 h-4 sm:w-5 sm:h-5 text-zinc-400" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
-                            </svg>
-                        </button>
-
-                    </div>
-
-                    <!-- Right: Volume -->
-                    <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
-                        <button id="volumeBtn" onclick="toggleMute()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-zinc-800 transition-colors">
-                            <svg id="volumeIcon" class="w-4 h-4 sm:w-5 sm:h-5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
-                            </svg>
-                            <svg id="muteIcon" class="w-4 h-4 sm:w-5 sm:h-5 text-zinc-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>
-                            </svg>
-                        </button>
-                        <div class="w-16 sm:w-20 md:w-24 bg-zinc-800 rounded-full h-1 hidden lg:block">
-                            <div class="w-3/4 h-full bg-white rounded-full"></div>
-                        </div>
-                    </div>
-
-                </div>
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3 flex-1 min-w-0">
+            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-lg">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
             </div>
+            <div class="hidden sm:block truncate">
+              <p class="text-white font-semibold text-sm truncate">Mensaje Explicativo</p>
+              <p class="text-zinc-500 text-xs truncate">Su Aliado Digital</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-6">
+            <button onclick="skip(-10)" class="text-zinc-400 hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0019 16V8a1 1 0 00-1.6-.8l-5.334 4zM4.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0011 16V8a1 1 0 00-1.6-.8L4.066 11.2z" /></svg>
+            </button>
+            <button id="playBtn" onclick="togglePlay()" class="w-12 h-12 rounded-full bg-white hover:scale-105 flex items-center justify-center transition-all shadow-xl">
+              <svg id="playIcon" class="w-5 h-5 text-black ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <svg id="pauseIcon" class="w-5 h-5 text-black hidden" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>
+            </button>
+            <button onclick="skip(10)" class="text-zinc-400 hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.933 12.8a1 1 0 000-1.6L6.6 7.2A1 1 0 005 8v8a1 1 0 001.6.8l5.333-4zM19.933 12.8a1 1 0 000-1.6l-5.333-4A1 1 0 0013 8v8a1 1 0 001.6.8l5.333-4z" /></svg>
+            </button>
+          </div>
+
+          <div class="flex items-center justify-end flex-1">
+            <button id="volumeBtn" onclick="toggleMute()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-zinc-800">
+              <svg id="volumeIcon" class="w-5 h-5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+              <svg id="muteIcon" class="w-5 h-5 text-zinc-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path></svg>
+            </button>
+          </div>
         </div>
-
-        <audio id="audioPlayer" src="mi-audio.mp3"></audio>
-
+      </div>
     </div>
+    <audio id="audioPlayer" src="mi-audio.mp3"></audio>
+  </div>
 </div>
 
 <script>
-    const modal = document.getElementById('infoModal');
-    const audio = document.getElementById('audioPlayer');
-    const playBtn = document.getElementById('playBtn');
-    const playIcon = document.getElementById('playIcon');
-    const pauseIcon = document.getElementById('pauseIcon');
-    const progressBar = document.getElementById('progressBar');
-    const progressContainer = document.getElementById('progressContainer');
-    const progressThumb = document.getElementById('progressThumb');
-    const currentTimeEl = document.getElementById('currentTime');
-    const durationEl = document.getElementById('duration');
-    const volumeBtn = document.getElementById('volumeBtn');
-    const volumeIcon = document.getElementById('volumeIcon');
-    const muteIcon = document.getElementById('muteIcon');
-    const speedBtn = document.getElementById('speedBtn');
-    const speedText = document.getElementById('speedText');
+  // Script original con funciones de play, skip, mute y barra de progreso
+  const modal = document.getElementById('infoModal');
+  const audio = document.getElementById('audioPlayer');
+  const playBtn = document.getElementById('playBtn'), playIcon = document.getElementById('playIcon'), pauseIcon = document.getElementById('pauseIcon');
+  const progressBar = document.getElementById('progressBar'), progressContainer = document.getElementById('progressContainer');
+  const currentTimeEl = document.getElementById('currentTime'), durationEl = document.getElementById('duration');
+  const volumeBtn = document.getElementById('volumeBtn'), volumeIcon = document.getElementById('volumeIcon'), muteIcon = document.getElementById('muteIcon');
+  let hasShownModal = false;
 
-    let hasShownModal = false;
-    let isFastSpeed = false;
-
-    window.addEventListener('scroll', () => {
-        if (hasShownModal) return;
-        const enviosSection = document.getElementById('envios');
+  window.addEventListener('scroll', () => {
+    if (hasShownModal) return;
+    const enviosSection = document.getElementById('envios');
+    if (enviosSection) {
         const rect = enviosSection.getBoundingClientRect();
-        if (rect.top <= window.innerHeight * 0.8) {
-            openModal();
-            hasShownModal = true;
-        }
-    });
-
-    function openModal() {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        document.body.style.overflow = 'hidden';
+        if (rect.top <= window.innerHeight * 0.8) { openModal(); hasShownModal = true; }
     }
+  });
 
-    function closeModal() {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-        document.body.style.overflow = '';
-        audio.pause();
-        audio.currentTime = 0;
-        updatePlayButton();
-    }
+  function openModal() { modal.classList.remove('hidden'); modal.classList.add('flex'); document.body.style.overflow = 'hidden'; }
+  function closeModal() { modal.classList.add('hidden'); modal.classList.remove('flex'); document.body.style.overflow = ''; audio.pause(); audio.currentTime = 0; updatePlayButton(); }
+  function togglePlay() { if (audio.paused) { audio.play(); } else { audio.pause(); } updatePlayButton(); }
+  function updatePlayButton() { if (audio.paused) { playIcon.classList.remove('hidden'); pauseIcon.classList.add('hidden'); } else { playIcon.classList.add('hidden'); pauseIcon.classList.remove('hidden'); } }
+  function skip(seconds) { audio.currentTime += seconds; }
+  function toggleMute() { audio.muted = !audio.muted; if (audio.muted) { volumeIcon.classList.add('hidden'); muteIcon.classList.remove('hidden'); } else { volumeIcon.classList.remove('hidden'); muteIcon.classList.add('hidden'); } }
+  function formatTime(seconds) { if(isNaN(seconds)) return "0:00"; const mins = Math.floor(seconds / 60); const secs = Math.floor(seconds % 60); return `${mins}:${secs.toString().padStart(2, '0')}`; }
 
-    function togglePlay() {
-        if (audio.paused) {
-            audio.play();
-        } else {
-            audio.pause();
-        }
-        updatePlayButton();
-    }
-
-    function updatePlayButton() {
-        if (audio.paused) {
-            playIcon.classList.remove('hidden');
-            pauseIcon.classList.add('hidden');
-        } else {
-            playIcon.classList.add('hidden');
-            pauseIcon.classList.remove('hidden');
-        }
-    }
-
-    function toggleMute() {
-        audio.muted = !audio.muted;
-        if (audio.muted) {
-            volumeIcon.classList.add('hidden');
-            muteIcon.classList.remove('hidden');
-        } else {
-            volumeIcon.classList.remove('hidden');
-            muteIcon.classList.add('hidden');
-        }
-    }
-
-    function toggleSpeed() {
-        isFastSpeed = !isFastSpeed;
-        audio.playbackRate = isFastSpeed ? 1.5 : 1.0;
-        speedText.textContent = isFastSpeed ? "1.5×" : "1×";
-        speedBtn.classList.toggle('bg-zinc-800', !isFastSpeed);
-        speedBtn.classList.toggle('bg-blue-600', isFastSpeed);
-        speedBtn.classList.toggle('border-zinc-700', !isFastSpeed);
-        speedBtn.classList.toggle('border-blue-500', isFastSpeed);
-    }
-
-    function formatTime(seconds) {
-        const mins = Math.floor(seconds / 60);
-        const secs = Math.floor(seconds % 60);
-        return `${mins}:${secs.toString().padStart(2, '0')}`;
-    }
-
-    audio.addEventListener('timeupdate', () => {
-        if (audio.duration) {
-            const progress = (audio.currentTime / audio.duration) * 100;
-            progressBar.style.width = `${progress}%`;
-            progressThumb.style.left = `${progress}%`;
-            currentTimeEl.textContent = formatTime(audio.currentTime);
-        }
-    });
-
-    audio.addEventListener('loadedmetadata', () => {
-        durationEl.textContent = formatTime(audio.duration);
-    });
-
-    progressContainer.addEventListener('click', (e) => {
-        const rect = progressContainer.getBoundingClientRect();
-        const percent = (e.clientX - rect.left) / rect.width;
-        audio.currentTime = percent * audio.duration;
-    });
-
-    audio.addEventListener('ended', () => {
-        updatePlayButton();
-    });
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-            closeModal();
-        }
-        // Space bar para play/pause
-        if (e.key === ' ' && !modal.classList.contains('hidden')) {
-            e.preventDefault();
-            togglePlay();
-        }
-        // S key para velocidad
-        if (e.key === 's' && !modal.classList.contains('hidden')) {
-            e.preventDefault();
-            toggleSpeed();
-        }
-    });
-
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
+  audio.addEventListener('timeupdate', () => { if (audio.duration) { const progress = (audio.currentTime / audio.duration) * 100; progressBar.style.width = `${progress}%`; currentTimeEl.textContent = formatTime(audio.currentTime); } });
+  audio.addEventListener('loadedmetadata', () => { durationEl.textContent = formatTime(audio.duration); });
+  progressContainer.addEventListener('click', (e) => { const rect = progressContainer.getBoundingClientRect(); const percent = (e.clientX - rect.left) / rect.width; audio.currentTime = percent * audio.duration; });
 </script>
 
 <section id="envios" class="relative py-16 md:py-24 bg-[#080808] overflow-hidden">
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-    
     <div class="reveal-card mb-12 md:mb-16">
-      <span class="inline-block px-4 py-1 text-[10px] font-bold tracking-[0.2em] uppercase text-green-400 bg-green-500/10 rounded-full mb-4">
-        Servicio Nacional
-      </span>
-      <h2 class="text-4xl md:text-6xl font-black tracking-tighter text-white leading-tight">
-        Entregas seguras en <br class="hidden md:block">
-        <span class="text-green-500">toda República Dominicana.</span>
-      </h2>
+      <span class="inline-block px-4 py-1 text-[10px] font-bold tracking-[0.2em] uppercase text-green-400 bg-green-500/10 rounded-full mb-4">Servicio Nacional</span>
+      <h2 class="text-4xl md:text-6xl font-black tracking-tighter text-white leading-tight">Entregas seguras en <br class="hidden md:block"><span class="text-green-500">toda República Dominicana.</span></h2>
     </div>
-
     <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
-      
       <div class="reveal-card delay-1 group relative md:col-span-8 overflow-hidden rounded-[2.5rem] bg-zinc-900 border border-white/5 min-h-[320px]">
-        <div class="absolute inset-0 z-0 opacity-25 md:opacity-25 group-hover:scale-105 transition-transform duration-1000">
-          <img src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?q=80&w=1200" alt="Logística" class="w-full h-full object-cover">
-        </div>
+        <div class="absolute inset-0 z-0 opacity-25 md:opacity-25 group-hover:scale-105 transition-transform duration-1000"><img src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?q=80&w=1200" alt="Logística" class="w-full h-full object-cover"></div>
         <div class="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent md:via-transparent"></div>
         <div class="relative z-10 p-8 md:p-12 flex flex-col justify-end h-full">
-          <div class="w-14 h-14 rounded-2xl bg-green-500 flex items-center justify-center shadow-lg mb-6">
-            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
-          </div>
+          <div class="w-14 h-14 rounded-2xl bg-green-500 flex items-center justify-center shadow-lg mb-6"><svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg></div>
           <h3 class="text-3xl md:text-4xl font-bold mb-3 text-white">Envío Gratis</h3>
           <p class="text-zinc-400 text-lg max-w-sm">Disponible en todas tus compras mayores a RD$10,000.</p>
         </div>
       </div>
-
       <div class="md:col-span-4 p-8 md:p-10 rounded-[2rem] md:rounded-[3rem] bg-blue-600 text-white flex flex-col justify-between relative overflow-hidden">
         <div class="relative z-10">
-          <div class="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center mb-6">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          </div>
+          <div class="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center mb-6"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
           <h3 class="text-2xl font-bold mb-6">Entrega Rápida</h3>
           <div class="space-y-4">
-            <div class="flex justify-between items-center border-b border-white/10 pb-2">
-              <span class="opacity-80">Santo Domingo</span>
-              <span class="font-bold">24-48h</span>
-            </div>
-            <div class="flex justify-between items-center border-b border-white/10 pb-2">
-              <span class="opacity-80">Provincias</span>
-              <span class="font-bold">3-5 días</span>
-            </div>
+            <div class="flex justify-between items-center border-b border-white/10 pb-2"><span class="opacity-80">Santo Domingo</span><span class="font-bold">24-48h</span></div>
+            <div class="flex justify-between items-center border-b border-white/10 pb-2"><span class="opacity-80">Provincias</span><span class="font-bold">3-5 días</span></div>
           </div>
         </div>
         <div class="mt-8 md:mt-0 text-xs font-bold uppercase tracking-widest opacity-60 italic">Servicio Express Activo</div>
       </div>
-
       <div class="reveal-card delay-3 md:col-span-12 p-8 md:p-10 rounded-[2.5rem] bg-zinc-900 border border-white/5 flex flex-col md:flex-row items-center justify-between gap-8">
         <div class="flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
-          <div class="w-20 h-20 rounded-[1.5rem] overflow-hidden">
-             <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=200" alt="Pago" class="w-full h-full object-cover">
-          </div>
-          <div>
-            <h3 class="text-xl font-bold text-white mb-1">Pagos  100% Seguros</h3>
-            <p class="text-zinc-400">Elige el método que más te convenga al finalizar tu compra.</p>
-          </div>
+          <div class="w-20 h-20 rounded-[1.5rem] overflow-hidden"><img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=200" alt="Pago" class="w-full h-full object-cover"></div>
+          <div><h3 class="text-xl font-bold text-white mb-1">Pagos 100% Seguros</h3><p class="text-zinc-400">Elige el método que más te convenga al finalizar tu compra.</p></div>
         </div>
-        
         <div class="flex flex-wrap justify-center gap-4">
-          <div class="px-5 py-3 bg-zinc-800 rounded-2xl border border-zinc-700 shadow-sm flex items-center">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" class="h-4 w-auto">
-          </div>
-          <div class="px-5 py-3 bg-zinc-800 rounded-2xl border border-zinc-700 shadow-sm flex items-center">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" class="h-7 w-auto">
-          </div>
+          <div class="px-5 py-3 bg-zinc-800 rounded-2xl border border-zinc-700 shadow-sm flex items-center"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" class="h-4 w-auto"></div>
+          <div class="px-5 py-3 bg-zinc-800 rounded-2xl border border-zinc-700 shadow-sm flex items-center"><img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" class="h-7 w-auto"></div>
           <div class="px-5 py-3 bg-emerald-700 text-white rounded-2xl flex items-center gap-3">
-  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 11-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
-  </svg>
-  <span class="text-xs font-black uppercase tracking-wider">Efectivo</span>
-</div>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 11-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+            <span class="text-xs font-black uppercase tracking-wider">Efectivo</span>
+          </div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- SECCIÓN TIENDA MEJORADA -->
-<section id="tienda" class="py-16 md:py-24 bg-[#0a0a0a]; relative">
+<section id="tienda" class="py-16 md:py-24 bg-[#0a0a0a] relative">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    
-    
-<!-- OPCIÓN 3: Moderno con Stats -->
-<div class="option-container">
-  <div class="max-w-5xl mx-auto">
-    <div class="text-center mb-10 md:mb-14">
-      <div class="inline-flex items-center gap-2 mb-4">
-        <span class="px-3 py-1 bg-green-500/10 text-green-400 rounded-md text-xs font-bold uppercase tracking-wider border border-green-500/20">
-          En Vivo
-        </span>
-        <span class="text-xs text-gray-500">•</span>
-        <span class="text-xs text-gray-400">Catálogo actualizado</span>
-      </div>
-      
-      <h2 class="text-3xl md:text-5xl lg:text-7xl font-black mb-4">
-        <span class="text-gray-300">Compra tu Próximo</span>
-        <span class="block mt-2">
-          <span class="text-white">Smartphone </span>
-          <span class="text-blue-400">Aquí</span>
-        </span>
-      </h2>
-      
-      <p class="text-sm md:text-base text-gray-400 max-w-2xl mx-auto mb-10">
-        Selección de los dispositivos más populares del mercado. Stock limitado, aprovecha nuestras ofertas.
-      </p>
-      
-      <div class="grid grid-cols-3 gap-4 md:gap-8 max-w-3xl mx-auto">
-        <div class="text-center">
-          <div class="text-2xl md:text-4xl font-black text-white mb-1">500+</div>
-          <div class="text-xs md:text-sm text-gray-500 uppercase tracking-wide">Clientes Felices</div>
-        </div>
-        <div class="text-center border-x border-white/10">
-          <div class="text-2xl md:text-4xl font-black text-blue-400 mb-1">24h</div>
-          <div class="text-xs md:text-sm text-gray-500 uppercase tracking-wide">Entrega SD</div>
-        </div>
-        <div class="text-center">
-          <div class="text-2xl md:text-4xl font-black text-white mb-1">100%</div>
-          <div class="text-xs md:text-sm text-gray-500 uppercase tracking-wide">Garantizado</div>
+    <div class="option-container">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-10 md:mb-14">
+          <div class="inline-flex items-center gap-2 mb-4">
+            <span class="px-3 py-1 bg-green-500/10 text-green-400 rounded-md text-xs font-bold uppercase tracking-wider border border-green-500/20">En Vivo</span>
+            <span class="text-xs text-gray-500">•</span>
+            <span class="text-xs text-gray-400">Catálogo actualizado</span>
+          </div>
+          
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-black mb-4 tracking-tighter">
+            <span class="text-gray-300">Compra tu Próximo</span>
+            <span class="inline-block md:inline">
+               <span class="text-white"> Smartphone</span>
+               <span class="text-blue-400"> Aquí</span>
+            </span>
+          </h2>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-    <!-- Filtros optimizados y centrados -->
     <div class="mb-8 md:mb-12">
       <div class="flex justify-center">
-        <div class="filters-container max-w-4xl">
-          <button class="filter-btn px-5 py-2.5 bg-white text-black font-semibold rounded-full text-sm transition-all whitespace-nowrap active-filter" data-filter="all">
-            Todos
-          </button>
-          <button class="filter-btn px-5 py-2.5 bg-zinc-900 border border-white/10 text-white font-semibold rounded-full text-sm hover:bg-zinc-800 hover:border-white/20 transition-all whitespace-nowrap" data-filter="iPhone">
-            iPhone
-          </button>
-          <button class="filter-btn px-5 py-2.5 bg-zinc-900 border border-white/10 text-white font-semibold rounded-full text-sm hover:bg-zinc-800 hover:border-white/20 transition-all whitespace-nowrap" data-filter="Samsung">
-            Samsung
-          </button>
-          <button class="filter-btn px-5 py-2.5 bg-zinc-900 border border-white/10 text-white font-semibold rounded-full text-sm hover:bg-zinc-800 hover:border-white/20 transition-all whitespace-nowrap" data-filter="Xiaomi">
-            Xiaomi
-          </button>
-          <button class="filter-btn px-5 py-2.5 bg-zinc-900 border border-white/10 text-white font-semibold rounded-full text-sm hover:bg-zinc-800 hover:border-white/20 transition-all whitespace-nowrap" data-filter="Google">
-            Google Pixel
-          </button>
-          <button class="filter-btn px-5 py-2.5 bg-zinc-900 border border-white/10 text-white font-semibold rounded-full text-sm hover:bg-zinc-800 hover:border-white/20 transition-all whitespace-nowrap" data-filter="OnePlus">
-            OnePlus
-          </button>
+        <div class="filters-container max-w-4xl overflow-x-auto no-scrollbar flex gap-2 pb-2 md:pb-0">
+          <button class="filter-btn px-5 py-2.5 bg-white text-black font-semibold rounded-full text-sm transition-all whitespace-nowrap active-filter" data-filter="all">Todos</button>
+          <button class="filter-btn px-5 py-2.5 bg-zinc-900 border border-white/10 text-white font-semibold rounded-full text-sm hover:bg-zinc-800 hover:border-white/20 transition-all whitespace-nowrap" data-filter="iPhone">iPhone</button>
+          <button class="filter-btn px-5 py-2.5 bg-zinc-900 border border-white/10 text-white font-semibold rounded-full text-sm hover:bg-zinc-800 hover:border-white/20 transition-all whitespace-nowrap" data-filter="Samsung">Samsung</button>
+          <button class="filter-btn px-5 py-2.5 bg-zinc-900 border border-white/10 text-white font-semibold rounded-full text-sm hover:bg-zinc-800 hover:border-white/20 transition-all whitespace-nowrap" data-filter="Xiaomi">Xiaomi</button>
+          <button class="filter-btn px-5 py-2.5 bg-zinc-900 border border-white/10 text-white font-semibold rounded-full text-sm hover:bg-zinc-800 hover:border-white/20 transition-all whitespace-nowrap" data-filter="Google">Google Pixel</button>
+          <button class="filter-btn px-5 py-2.5 bg-zinc-900 border border-white/10 text-white font-semibold rounded-full text-sm hover:bg-zinc-800 hover:border-white/20 transition-all whitespace-nowrap" data-filter="OnePlus">OnePlus</button>
         </div>
       </div>
     </div>
-    
-    <!-- Grid de productos optimizado - 1 columna móvil, 2 tablet, 4 desktop -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6" id="productsGrid"></div>
 
-    <!-- Indicador de productos filtrados -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6" id="productsGrid"></div>
+    
     <div id="filterIndicator" class="text-center mt-8 mb-6 hidden">
-      <p class="text-sm text-gray-400">
-        Mostrando <span id="filterCount" class="text-white font-semibold">0</span> productos
-        <span id="filterBrand" class="text-blue-400"></span>
-      </p>
+      <p class="text-sm text-gray-400">Mostrando <span id="filterCount" class="text-white font-semibold">0</span> productos <span id="filterBrand" class="text-blue-400"></span></p>
     </div>
 
-    <!-- Ver más -->
     <div class="text-center mt-12">
       <button id="loadMoreBtn" class="px-6 md:px-8 py-3 border border-white/20 text-white font-semibold rounded-full text-sm hover:bg-white/5 hover:border-white/30 transition-all flex items-center gap-2 mx-auto">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-        </svg>
-        Cargar Más Productos
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg> Cargar Más Productos
       </button>
     </div>
   </div>
 </section>
 
-<style>
-  /* Estilos mejorados para la sección */
-  .filters-container {
-    display: flex;
-    gap: 0.75rem;
-    overflow-x: auto;
-    padding: 0.5rem;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(59, 130, 246, 0.5) transparent;
-  }
-  
-  .filters-container::-webkit-scrollbar {
-    height: 4px;
-  }
-  
-  .filters-container::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  .filters-container::-webkit-scrollbar-thumb {
-    background: rgba(59, 130, 246, 0.5);
-    border-radius: 2px;
-  }
-  
-  .filter-btn {
-    flex-shrink: 0;
-    white-space: nowrap;
-    transition: all 0.3s ease;
-  }
-  
-  .active-filter {
-    background: white !important;
-    color: black !important;
-    border: none !important;
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-  }
-  
-  /* Grid responsive mejorado */
-  @media (min-width: 640px) and (max-width: 1023px) {
-    .grid-cols-2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.5rem;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .grid-cols-4 {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-  }
-  
-  /* Mejoras en las tarjetas de producto */
-  .product-card {
-    opacity: 1 !important;
-    transform: none !important;
-    animation: none !important;
-    background: rgba(26, 26, 26, 0.8);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-  }
-  
-  .product-card:hover {
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    transform: translateY(-4px);
-  }
-  
-  .product-image-container {
-    position: relative;
-    width: 100%;
-    height: 260px;
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    overflow: hidden;
-  }
-  
-  .product-image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .product-card:hover .product-image-container img {
-    transform: scale(1.08);
-  }
-  
-  .product-specs {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    min-height: 2.5rem;
-  }
-  
-  .stock-badge {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    z-index: 10;
-    backdrop-filter: blur(10px);
-  }
-  
-  .no-results {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 3rem 1rem;
-    background: rgba(26, 26, 26, 0.5);
-    border-radius: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .price {
-    background: linear-gradient(135deg, #ffffff 0%, #d1d5db 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  /* Estilo para hacer invisible el scrollbar horizontal */
-  .filters-container {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE y Edge */
-  }
-  
-  .filters-container::-webkit-scrollbar {
-    display: none; /* Chrome, Safari y Opera */
-  }
-  
-  .filters-container::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  
-  .filters-container::-webkit-scrollbar-thumb {
-    background: transparent;
-  }
-</style>
-
 <script>
-  // Datos de productos mejorados
   const products = [
-    {
-      id: 1,
-      brand: 'iPhone',
-      brandName: 'iPhone 15 Pro Max',
-      brandColor: 'text-blue-400',
-      title: 'iPhone 15 Pro Max 256GB',
-      specs: 'Titanio Natural • A17 Pro • Triple Cámara 48MP • Dynamic Island',
-      rating: 5,
-      reviews: 127,
-      price: 89999,
-      oldPrice: 99999,
-      discount: 10,
-      stock: 'En Stock',
-      stockClass: 'stock-badge bg-green-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase',
-      image: 'img/cel-1.jpg'
-    },
-    {
-      id: 2,
-      brand: 'Samsung',
-      brandName: 'Samsung Galaxy',
-      brandColor: 'text-purple-400',
-      title: 'Galaxy S24 Ultra 512GB',
-      specs: 'Titanio Gris • Snapdragon 8 Gen 3 • S Pen • 200MP Camera',
-      rating: 4,
-      reviews: 98,
-      price: 84999,
-      oldPrice: null,
-      discount: 0,
-      stock: 'En Stock',
-      stockClass: 'stock-badge bg-green-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase',
-      image: 'img/cel-2.jpg'
-    },
-    {
-      id: 3,
-      brand: 'Xiaomi',
-      brandName: 'Xiaomi',
-      brandColor: 'text-orange-400',
-      title: 'Xiaomi 14 Pro 256GB',
-      specs: 'Negro • Snapdragon 8 Gen 3 • Leica Camera • 120W Fast Charge',
-      rating: 5,
-      reviews: 156,
-      price: 54999,
-      oldPrice: 64999,
-      discount: 15,
-      stock: 'Últimas 3 unidades',
-      stockClass: 'stock-badge bg-yellow-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase',
-      image: 'img/cel-3.jpg'
-    },
-    {
-      id: 4,
-      brand: 'Google',
-      brandName: 'Google Pixel',
-      brandColor: 'text-green-400',
-      title: 'Pixel 8 Pro 128GB',
-      specs: 'Obsidiana • Google Tensor G3 • AI Camera • 7 años de updates',
-      rating: 4,
-      reviews: 84,
-      price: 62999,
-      oldPrice: null,
-      discount: 0,
-      stock: 'En Stock',
-      stockClass: 'stock-badge bg-green-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase',
-      image: 'img/cel-4.jpg'
-    },
-    {
-      id: 5,
-      brand: 'OnePlus',
-      brandName: 'OnePlus',
-      brandColor: 'text-red-400',
-      title: 'OnePlus 12 256GB',
-      specs: 'Verde Flowy • Snapdragon 8 Gen 3 • 120Hz LTPO • 100W Charging',
-      rating: 5,
-      reviews: 203,
-      price: 49999,
-      oldPrice: 59999,
-      discount: 17,
-      stock: 'En Stock',
-      stockClass: 'stock-badge bg-green-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase',
-      image: 'img/cel-5.jpg'
-    },
-    {
-      id: 6,
-      brand: 'iPhone',
-      brandName: 'iPhone 14',
-      brandColor: 'text-blue-400',
-      title: 'iPhone 14 Pro 128GB',
-      specs: 'Morado Oscuro • A16 Bionic • Dynamic Island • Ceramic Shield',
-      rating: 4,
-      reviews: 312,
-      price: 69999,
-      oldPrice: 79999,
-      discount: 12,
-      stock: 'Últimas 5 unidades',
-      stockClass: 'stock-badge bg-yellow-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase',
-      image: 'img/cel-6.jpg'
-    },
-    {
-      id: 7,
-      brand: 'Samsung',
-      brandName: 'Samsung Galaxy',
-      brandColor: 'text-purple-400',
-      title: 'Galaxy Z Fold 5 512GB',
-      specs: 'Phantom Black • Snapdragon 8 Gen 2 • Plegable • S Pen Integrado',
-      rating: 5,
-      reviews: 89,
-      price: 94999,
-      oldPrice: null,
-      discount: 0,
-      stock: 'En Stock',
-      stockClass: 'stock-badge bg-green-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase',
-      image: 'img/cel-7.jpg'
-    },
-    {
-      id: 8,
-      brand: 'iPhone',
-      brandName: 'iPhone 15',
-      brandColor: 'text-blue-400',
-      title: 'iPhone 15 128GB',
-      specs: 'Rosa • A16 Bionic • Cámara 48MP • USB-C • 20 horas batería',
-      rating: 5,
-      reviews: 245,
-      price: 64999,
-      oldPrice: 69999,
-      discount: 7,
-      stock: 'En Stock',
-      stockClass: 'stock-badge bg-green-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase',
-      image: 'img/cel-8.jpg'
-    }
+    { id: 1, brand: 'iPhone', brandName: 'iPhone 15 Pro Max', brandColor: 'text-blue-400', title: 'iPhone 15 Pro Max 256GB', specs: 'Titanio Natural • A17 Pro • Triple Cámara 48MP • Dynamic Island', rating: 5, reviews: 127, price: 89999, oldPrice: 99999, discount: 10, stock: 'En Stock', stockClass: 'stock-badge bg-green-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase', image: 'img/cel-1.jpg' },
+    { id: 2, brand: 'Samsung', brandName: 'Samsung Galaxy', brandColor: 'text-purple-400', title: 'Galaxy S24 Ultra 512GB', specs: 'Titanio Gris • Snapdragon 8 Gen 3 • S Pen • 200MP Camera', rating: 4, reviews: 98, price: 84999, oldPrice: null, discount: 0, stock: 'En Stock', stockClass: 'stock-badge bg-green-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase', image: 'img/cel-2.jpg' },
+    { id: 3, brand: 'Xiaomi', brandName: 'Xiaomi', brandColor: 'text-orange-400', title: 'Xiaomi 14 Pro 256GB', specs: 'Negro • Snapdragon 8 Gen 3 • Leica Camera • 120W Fast Charge', rating: 5, reviews: 156, price: 54999, oldPrice: 64999, discount: 15, stock: 'Últimas 3 unidades', stockClass: 'stock-badge bg-yellow-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase', image: 'img/cel-3.jpg' },
+    { id: 4, brand: 'Google', brandName: 'Google Pixel', brandColor: 'text-green-400', title: 'Pixel 8 Pro 128GB', specs: 'Obsidiana • Google Tensor G3 • AI Camera • 7 años de updates', rating: 4, reviews: 84, price: 62999, oldPrice: null, discount: 0, stock: 'En Stock', stockClass: 'stock-badge bg-green-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase', image: 'img/cel-4.jpg' },
+    { id: 5, brand: 'OnePlus', brandName: 'OnePlus', brandColor: 'text-red-400', title: 'OnePlus 12 256GB', specs: 'Verde Flowy • Snapdragon 8 Gen 3 • 120Hz LTPO • 100W Charging', rating: 5, reviews: 203, price: 49999, oldPrice: 59999, discount: 17, stock: 'En Stock', stockClass: 'stock-badge bg-green-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase', image: 'img/cel-5.jpg' },
+    { id: 6, brand: 'iPhone', brandName: 'iPhone 14', brandColor: 'text-blue-400', title: 'iPhone 14 Pro 128GB', specs: 'Morado Oscuro • A16 Bionic • Dynamic Island • Ceramic Shield', rating: 4, reviews: 312, price: 69999, oldPrice: 79999, discount: 12, stock: 'Últimas 5 unidades', stockClass: 'stock-badge bg-yellow-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase', image: 'img/cel-6.jpg' },
+    { id: 7, brand: 'Samsung', brandName: 'Samsung Galaxy', brandColor: 'text-purple-400', title: 'Galaxy Z Fold 5 512GB', specs: 'Phantom Black • Snapdragon 8 Gen 2 • Plegable • S Pen Integrado', rating: 5, reviews: 89, price: 94999, oldPrice: null, discount: 0, stock: 'En Stock', stockClass: 'stock-badge bg-green-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase', image: 'img/cel-7.jpg' },
+    { id: 8, brand: 'iPhone', brandName: 'iPhone 15', brandColor: 'text-blue-400', title: 'iPhone 15 128GB', specs: 'Rosa • A16 Bionic • Cámara 48MP • USB-C • 20 horas batería', rating: 5, reviews: 245, price: 64999, oldPrice: 69999, discount: 7, stock: 'En Stock', stockClass: 'stock-badge bg-green-500/90 text-white px-3 py-1 rounded-full text-xs font-bold uppercase', image: 'img/cel-8.jpg' }
   ];
 
-  // Función para generar estrellas
   function generateStars(rating) {
     let stars = '';
     for (let i = 0; i < 5; i++) {
-      const colorClass = i < rating ? 'text-yellow-400' : 'text-gray-600';
-      stars += `
-        <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current ${colorClass}" viewBox="0 0 20 20">
-          <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
-        </svg>
-      `;
+      stars += `<svg class="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current ${i < rating ? 'text-yellow-400' : 'text-gray-600'}" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/></svg>`;
     }
     return stars;
   }
 
-  // Función para generar tarjeta de producto
   function createProductCard(product) {
     return `
       <div class="product-card bg-zinc-900/50 rounded-xl overflow-hidden" data-brand="${product.brand}">
         <div class="product-image-container relative">
-          ${product.discount > 0 ? `
-            <div class="absolute top-2 right-2 z-10 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md">
-              -${product.discount}%
-            </div>
-          ` : ''}
-          <span class="${product.stockClass}">
-            ${product.stock}
-          </span>
-          <img src="${product.image}" alt="${product.title}" 
-               onerror="this.src='https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400&h=400&fit=crop&crop=center';"
-               class="w-full h-full object-contain">
+          ${product.discount > 0 ? `<div class="absolute top-2 right-2 z-10 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-md">-${product.discount}%</div>` : ''}
+          <span class="${product.stockClass}">${product.stock}</span>
+          <img src="${product.image}" alt="${product.title}" onerror="this.src='https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400&h=400&fit=crop&crop=center';" class="w-full h-full object-contain">
         </div>
         <div class="p-4">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-bold uppercase tracking-wide ${product.brandColor}">
-              ${product.brandName}
-            </span>
-            <div class="flex gap-1">
-              ${generateStars(product.rating)}
-            </div>
-          </div>
-          
-          <h3 class="text-base font-bold mb-1 leading-tight line-clamp-1">
-            ${product.title}
-          </h3>
-          <p class="product-specs text-xs text-gray-400 mb-3 leading-relaxed">
-            ${product.specs}
-          </p>
-          
+          <div class="flex items-center justify-between mb-2"><span class="text-xs font-bold uppercase tracking-wide ${product.brandColor}">${product.brandName}</span><div class="flex gap-1">${generateStars(product.rating)}</div></div>
+          <h3 class="text-base font-bold mb-1 leading-tight line-clamp-1">${product.title}</h3>
+          <p class="product-specs text-xs text-gray-400 mb-3 leading-relaxed">${product.specs}</p>
           <div class="flex items-baseline justify-between mb-4">
-            <div>
-              <span class="price text-xl font-bold">RD$${product.price.toLocaleString()}</span>
-              ${product.oldPrice ? `
-                <div class="flex items-center gap-1 mt-1">
-                  <span class="text-xs text-gray-500 line-through">RD$${product.oldPrice.toLocaleString()}</span>
-                  <span class="text-xs text-green-400 font-semibold">Ahorras RD$${(product.oldPrice - product.price).toLocaleString()}</span>
-                </div>
-              ` : ''}
-            </div>
+            <div><span class="price text-xl font-bold">RD$${product.price.toLocaleString()}</span>${product.oldPrice ? `<div class="flex items-center gap-1 mt-1"><span class="text-xs text-gray-500 line-through">RD$${product.oldPrice.toLocaleString()}</span><span class="text-xs text-green-400 font-semibold">Ahorras RD$${(product.oldPrice - product.price).toLocaleString()}</span></div>` : ''}</div>
             <span class="text-[0.55rem] text-gray-500">(${product.reviews})</span>
           </div>
-          
           <button class="add-to-cart-btn w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 hover:shadow-lg transition-all duration-300 text-sm" data-id="${product.id}">
-            <span class="flex items-center justify-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-              </svg>
-              Agregar al Carrito
-            </span>
+            <span class="flex items-center justify-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg> Agregar al Carrito</span>
           </button>
         </div>
-      </div>
-    `;
+      </div>`;
   }
 
-  // Variables globales
-  let currentFilter = 'all';
-  let visibleProducts = 8;
+  let currentFilter = 'all', visibleProducts = 8;
   const productsPerLoad = 4;
 
-  // Renderizar productos
   function renderProducts(filter = 'all', limit = visibleProducts) {
-    const productsGrid = document.getElementById('productsGrid');
-    const filterIndicator = document.getElementById('filterIndicator');
-    const filterCount = document.getElementById('filterCount');
-    const filterBrand = document.getElementById('filterBrand');
-    
-    // Filtrar productos
+    const productsGrid = document.getElementById('productsGrid'), filterIndicator = document.getElementById('filterIndicator');
+    const filterCount = document.getElementById('filterCount'), filterBrand = document.getElementById('filterBrand');
     let filteredProducts = products;
-    if (filter !== 'all') {
-      filteredProducts = products.filter(product => product.brand === filter);
-    }
-    
-    // Limitar productos visibles
+    if (filter !== 'all') filteredProducts = products.filter(product => product.brand === filter);
     const productsToShow = filteredProducts.slice(0, limit);
-    
-    // Actualizar indicador
     filterIndicator.classList.toggle('hidden', filter === 'all');
     filterCount.textContent = filteredProducts.length;
     filterBrand.textContent = filter !== 'all' ? ` de ${filter}` : '';
-    
-    // Mostrar mensaje si no hay resultados
+
     if (filteredProducts.length === 0) {
-      productsGrid.innerHTML = `
-        <div class="no-results col-span-full">
-          <div class="w-16 h-16 mx-auto mb-4 bg-zinc-800 rounded-full flex items-center justify-center">
-            <svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-          </div>
-          <h3 class="text-lg font-bold mb-2 text-white">No encontramos productos</h3>
-          <p class="text-gray-400">Intenta con otra categoría o vuelve más tarde.</p>
-        </div>
-      `;
+      productsGrid.innerHTML = `<div class="no-results col-span-full"><div class="w-16 h-16 mx-auto mb-4 bg-zinc-800 rounded-full flex items-center justify-center"><svg class="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><h3 class="text-lg font-bold mb-2 text-white">No encontramos productos</h3><p class="text-gray-400">Intenta con otra categoría o vuelve más tarde.</p></div>`;
       return;
     }
-    
-    // Renderizar productos
     productsGrid.innerHTML = productsToShow.map(product => createProductCard(product)).join('');
-    
-    // Ocultar/mostrar botón de cargar más
-    const loadMoreBtn = document.getElementById('loadMoreBtn');
-    loadMoreBtn.classList.toggle('hidden', limit >= filteredProducts.length);
+    document.getElementById('loadMoreBtn').classList.toggle('hidden', limit >= filteredProducts.length);
   }
 
-  // Inicializar productos
   renderProducts();
 
-  // Funcionalidad de filtros
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  filterBtns.forEach((btn) => {
+  document.querySelectorAll('.filter-btn').forEach((btn) => {
     btn.addEventListener('click', function() {
       const filter = this.getAttribute('data-filter');
-      
-      // Actualizar estado activo
-      filterBtns.forEach(b => {
-        b.classList.remove('active-filter');
-        b.classList.add('bg-zinc-900', 'border', 'border-white/10', 'text-white');
-      });
-      this.classList.remove('bg-zinc-900', 'border', 'border-white/10', 'text-white');
-      this.classList.add('active-filter');
-      
-      // Aplicar filtro
-      currentFilter = filter;
-      visibleProducts = 8; // Resetear contador
+      document.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('active-filter'); b.classList.add('bg-zinc-900', 'border', 'border-white/10', 'text-white'); });
+      this.classList.remove('bg-zinc-900', 'border', 'border-white/10', 'text-white'); this.classList.add('active-filter');
+      currentFilter = filter; visibleProducts = 8;
       renderProducts(filter, visibleProducts);
-      
-      // Scroll suave hacia la sección de productos
-      document.getElementById('tienda').scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
+      document.getElementById('tienda').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
 
-  // Funcionalidad de cargar más
-  document.getElementById('loadMoreBtn').addEventListener('click', function() {
-    visibleProducts += productsPerLoad;
-    renderProducts(currentFilter, visibleProducts);
-  });
+  document.getElementById('loadMoreBtn').addEventListener('click', function() { visibleProducts += productsPerLoad; renderProducts(currentFilter, visibleProducts); });
 
-  // Funcionalidad de agregar al carrito
   document.addEventListener('click', function(e) {
     if (e.target.closest('.add-to-cart-btn')) {
       const btn = e.target.closest('.add-to-cart-btn');
       const productId = btn.getAttribute('data-id');
       const product = products.find(p => p.id == productId);
-      
-      // Animación de agregado
-      btn.innerHTML = `
-        <span class="flex items-center justify-center gap-2">
-          <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-          </svg>
-          Agregando...
-        </span>
-      `;
+      btn.innerHTML = `<span class="flex items-center justify-center gap-2"><svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Agregando...</span>`;
       btn.disabled = true;
-      
-      // Simular agregado al carrito
       setTimeout(() => {
-        btn.innerHTML = `
-          <span class="flex items-center justify-center gap-2">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-            </svg>
-            ¡Agregado!
-          </span>
-        `;
-        btn.classList.remove('from-blue-600', 'to-blue-700');
-        btn.classList.add('from-green-600', 'to-green-700');
-        
-        // Mostrar notificación
+        btn.innerHTML = `<span class="flex items-center justify-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> ¡Agregado!</span>`;
+        btn.classList.remove('from-blue-600', 'to-blue-700'); btn.classList.add('from-green-600', 'to-green-700');
         showNotification(`${product.title} agregado al carrito`);
-        
-        // Resetear botón después de 2 segundos
         setTimeout(() => {
-          btn.innerHTML = `
-            <span class="flex items-center justify-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-              </svg>
-              Agregar al Carrito
-            </span>
-          `;
-          btn.classList.remove('from-green-600', 'to-green-700');
-          btn.classList.add('from-blue-600', 'to-blue-700');
-          btn.disabled = false;
+          btn.innerHTML = `<span class="flex items-center justify-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg> Agregar al Carrito</span>`;
+          btn.classList.remove('from-green-600', 'to-green-700'); btn.classList.add('from-blue-600', 'to-blue-700'); btn.disabled = false;
         }, 2000);
       }, 500);
     }
   });
 
-  // Función para mostrar notificaciones
   function showNotification(message) {
     const notification = document.createElement('div');
     notification.className = 'fixed top-20 right-4 bg-green-600 text-white px-4 py-3 rounded-lg shadow-lg z-50 animate-slideIn border border-green-500/20';
-    notification.innerHTML = `
-      <div class="flex items-center gap-3">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-        </svg>
-        <span class="text-sm font-medium">${message}</span>
-      </div>
-    `;
-    
+    notification.innerHTML = `<div class="flex items-center gap-3"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg><span class="text-sm font-medium">${message}</span></div>`;
     document.body.appendChild(notification);
-    
-    setTimeout(() => {
-      notification.classList.add('opacity-0', 'translate-x-full');
-      setTimeout(() => {
-        notification.remove();
-      }, 300);
-    }, 2500);
+    setTimeout(() => { notification.classList.add('opacity-0', 'translate-x-full'); setTimeout(() => { notification.remove(); }, 300); }, 2500);
   }
-
-  // Agregar animación CSS para la notificación
   const style = document.createElement('style');
-  style.textContent = `
-    @keyframes slideIn {
-      from {
-        transform: translateX(100%);
-        opacity: 0;
-      }
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-    .animate-slideIn {
-      animation: slideIn 0.3s ease-out;
-    }
-  `;
+  style.textContent = `@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } } .animate-slideIn { animation: slideIn 0.3s ease-out; }`;
   document.head.appendChild(style);
 </script>
 
 <section id="technology" class="min-h-screen relative overflow-hidden bg-black text-white">
   <div class="absolute inset-0">
-    <img id="tech-bg" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1920&q=80"
-         data-backup1="https://images.unsplash.com/photo-1629654291660-3c98113a0438?w=1920&q=80"
-         data-backup2="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=1920&q=80"
-         data-backup3="https://images.unsplash.com/photo-1518834103253-5d96ce89b8b4?w=1920&q=80"
-         alt="Technology" class="w-full h-full object-cover opacity-40">
+    <img id="tech-bg" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1920&q=80" alt="Technology" class="w-full h-full object-cover opacity-40">
     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
   </div>
-  
   <div class="relative z-10 min-h-screen flex items-center">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
       <div class="grid lg:grid-cols-2 gap-16 items-center">
         <div id="tech-content" class="space-y-8">
-          <div class="badge bg-white/10 text-white inline-flex">
-            Tecnología Avanzada
-          </div>
-          <h2 class="text-5xl lg:text-7xl font-black tracking-tighter leading-[0.9]">
-            El futuro
-            <span class="block text-blue-400">es ahora</span>
-          </h2>
-          <p class="text-xl text-gray-300 leading-relaxed">
-            Procesadores de última generación. Pantallas OLED con 1 billón de colores. Sistemas de cámara que desafían las leyes de la física.
-          </p>
-          
+          <div class="badge bg-white/10 text-white inline-flex">Tecnología Avanzada</div>
+          <h2 class="text-5xl lg:text-7xl font-black tracking-tighter leading-[0.9]">El futuro <span class="block text-blue-400">es ahora</span></h2>
+          <p class="text-xl text-gray-300 leading-relaxed">Procesadores de última generación. Pantallas OLED con 1 billón de colores. Sistemas de cámara que desafían las leyes de la física.</p>
           <div class="space-y-6 pt-8">
             <div class="flex items-start gap-4">
-              <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-bold text-lg mb-1">Snapdragon 8 Gen 3</h4>
-                <p class="text-gray-400">30% más rápido que la generación anterior. Eficiencia energética revolucionaria.</p>
-              </div>
+              <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
+              <div><h4 class="font-bold text-lg mb-1">Snapdragon 8 Gen 3</h4><p class="text-gray-400">30% más rápido que la generación anterior. Eficiencia energética revolucionaria.</p></div>
             </div>
-            
             <div class="flex items-start gap-4">
-              <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-                <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-bold text-lg mb-1">LTPO AMOLED 6.8"</h4>
-                <p class="text-gray-400">Refresh rate adaptativo de 1Hz a 120Hz. Colores vibrantes, negros perfectos.</p>
-              </div>
+              <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></div>
+              <div><h4 class="font-bold text-lg mb-1">LTPO AMOLED 6.8"</h4><p class="text-gray-400">Refresh rate adaptativo de 1Hz a 120Hz. Colores vibrantes, negros perfectos.</p></div>
             </div>
-            
             <div class="flex items-start gap-4">
-              <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0">
-                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-bold text-lg mb-1">Triple Cámara 108MP</h4>
-                <p class="text-gray-400">Ultra wide + Telephoto 5x + Macro. Fotografía computacional con IA.</p>
-              </div>
+              <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center flex-shrink-0"><svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg></div>
+              <div><h4 class="font-bold text-lg mb-1">Triple Cámara 108MP</h4><p class="text-gray-400">Ultra wide + Telephoto 5x + Macro. Fotografía computacional con IA.</p></div>
             </div>
           </div>
         </div>
-        
         <div id="tech-image" class="relative">
-          <div class="aspect-square rounded-3xl overflow-hidden">
-            <img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?w=800&q=80"
-                 data-backup1="https://images.unsplash.com/photo-1580910051074-3eb694886505?w=800&q=80"
-                 data-backup2="https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=800&q=80"
-                 data-backup3="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80"
-                 alt="Technology Detail" class="w-full h-full object-cover">
-          </div>
+          <div class="aspect-square rounded-3xl overflow-hidden"><img src="https://images.unsplash.com/photo-1580910051074-3eb694886505?w=800&q=80" alt="Technology Detail" class="w-full h-full object-cover"></div>
         </div>
       </div>
     </div>
@@ -1625,321 +676,215 @@ html { scroll-behavior: smooth; }
 </section>
 
 <section id="ofertas" class="relative py-32 overflow-hidden">
-  <div class="absolute inset-0">
-    <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1920&q=80" 
-         alt="Offers" 
-         class="w-full h-full object-cover opacity-10">
-  </div>
-  
+  <div class="absolute inset-0"><img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=1920&q=80" alt="Offers" class="w-full h-full object-cover opacity-10"></div>
   <div class="absolute inset-0 bg-gradient-to-br from-vertex-black/95 via-vertex-gray/95 to-vertex-black/95"></div>
-  
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid lg:grid-cols-2 gap-16 items-center">
       <div class="reveal-left space-y-8">
-        <div class="badge bg-red-500/10 text-red-400 inline-flex">
-          Ofertas Especiales
-        </div>
-        <h2 class="text-5xl lg:text-7xl font-black tracking-tighter leading-[0.9]">
-          Ahorra hasta
-          <span class="gradient-text block">40% HOY</span>
-        </h2>
-        <p class="text-xl text-gray-400 leading-relaxed">
-          Aprovecha nuestras ofertas exclusivas en smartphones seleccionados. Promociones limitadas válidas solo esta semana.
-        </p>
-        
+        <div class="badge bg-red-500/10 text-red-400 inline-flex">Ofertas Especiales</div>
+        <h2 class="text-5xl lg:text-7xl font-black tracking-tighter leading-[0.9]">Ahorra hasta <span class="gradient-text block">40% HOY</span></h2>
+        <p class="text-xl text-gray-400 leading-relaxed">Aprovecha nuestras ofertas exclusivas en smartphones seleccionados. Promociones limitadas válidas solo esta semana.</p>
         <div class="space-y-4">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            </div>
-            <span class="text-lg">Hasta 12 meses sin intereses</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            </div>
-            <span class="text-lg">Regalo sorpresa en compras mayores a RD$50,000</span>
-          </div>
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-            </div>
-            <span class="text-lg">Trade-in: cambia tu viejo teléfono por uno nuevo</span>
-          </div>
+          <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center"><svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></div><span class="text-lg">Hasta 12 meses sin intereses</span></div>
+          <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center"><svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></div><span class="text-lg">Regalo sorpresa en compras mayores a RD$50,000</span></div>
+          <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center"><svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg></div><span class="text-lg">Trade-in: cambia tu viejo teléfono por uno nuevo</span></div>
         </div>
-        
-        <button class="magnetic-btn px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-full hover:scale-105 transition-transform shadow-lg">
-          Ver Todas las Ofertas
-        </button>
+        <button class="magnetic-btn px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-full hover:scale-105 transition-transform shadow-lg">Ver Todas las Ofertas</button>
       </div>
-      
       <div class="reveal-right relative">
-        <div class="aspect-square rounded-3xl overflow-hidden shadow-2xl">
-          <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80" 
-               alt="Special Offer" 
-               class="w-full h-full object-cover">
-        </div>
+        <div class="aspect-square rounded-3xl overflow-hidden shadow-2xl"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80" alt="Special Offer" class="w-full h-full object-cover"></div>
         <div class="absolute -bottom-8 -left-8 w-48 h-48 bg-gradient-to-br from-orange-500 to-red-500 rounded-3xl opacity-20 blur-3xl"></div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="contacto" class="py-32 bg-vertex-gray">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="reveal text-center mb-20">
-      <div class="badge bg-blue-500/10 text-blue-400 mb-6 inline-flex">
-        Visítanos
-      </div>
-      <h2 class="text-5xl lg:text-6xl font-black tracking-tighter mb-6">
-        Encuéntranos
-      </h2>
-      <p class="text-xl text-gray-400 max-w-2xl mx-auto">
-        Visita nuestra tienda física o contáctanos para más información
-      </p>
+<a href="https://wa.me/18098786115" 
+   id="whatsapp-btn"
+   target="_blank" 
+   class="fixed bottom-6 right-6 z-50 bg-[#25D366] w-14 h-14 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 flex items-center justify-center opacity-0 invisible translate-y-10"
+   aria-label="Contactar por WhatsApp">
+    <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+</a>
+
+<script>
+  // Esta función activa la animación lenta del botón
+  function showWhatsAppBtn() {
+    gsap.to("#whatsapp-btn", {
+      autoAlpha: 1,      // Maneja opacity y visibility al mismo tiempo
+      y: 0,             // Sube a su posición original
+      duration: 1.8,    // Animación lenta y fluida
+      ease: "elastic.out(1, 0.5)", // Efecto visual de rebote suave
+      delay: 0.5        // Pequeña pausa tras cerrar el modal para que no sea brusco
+    });
+  }
+
+  // Lógica para detectar el cierre del modal
+  // Dependiendo de qué librería uses para el modal (Bootstrap, Tailwind nativo, etc.)
+  // Aquí te pongo la forma estándar de detectar cuando se oculta o se clickea el cierre:
+  
+  window.addEventListener('load', () => {
+    const modal = document.getElementById('infoModal');
+    const closeButtons = modal.querySelectorAll('[data-bs-dismiss="modal"], .close-modal, #closeBtn');
+
+    // OPCIÓN A: Si el modal se cierra con un botón específico
+    closeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        showWhatsAppBtn();
+      });
+    });
+
+    // OPCIÓN B: Si usas un MutationObserver (detecta cuando el modal desaparece del DOM o cambia de clase)
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class" || mutation.attributeName === "style") {
+          const isHidden = modal.classList.contains('hidden') || modal.style.display === 'none';
+          if (isHidden) {
+            showWhatsAppBtn();
+            observer.disconnect(); // Solo queremos que ocurra la primera vez
+          }
+        }
+      });
+    });
+
+    observer.observe(modal, { attributes: true });
+  });
+</script>
+
+<section id="contacto" class="relative bg-[#0a0a0a] py-20 overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-[#0a0a0a]/90 backdrop-blur-sm"></div>
     </div>
-    
-    <div class="grid lg:grid-cols-2 gap-12">
-      <div class="reveal-left space-y-8">
-        <div class="bg-vertex-black rounded-3xl p-8 border border-white/5">
-          <h3 class="text-2xl font-bold mb-6">Información de Contacto</h3>
-          
-          <div class="space-y-6">
-            <div class="flex items-start gap-4">
-              <div class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-bold mb-1">Dirección</h4>
-                <p class="text-gray-400">Av. Winston Churchill #1100<br>Santo Domingo, República Dominicana</p>
-              </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="reveal text-center mb-16">
+            <div class="badge bg-blue-500/10 text-blue-400 mb-6 inline-flex border border-blue-500/20 px-4 py-1 rounded-full text-sm font-semibold uppercase tracking-widest">
+                Ubicación
+            </div>
+            <h2 class="text-5xl lg:text-7xl font-black tracking-tighter mb-6 text-white">
+                Visita Nuestro <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Showroom</span>
+            </h2>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                Av. Winston Churchill #1100, Santo Domingo.
+            </p>
+        </div>
+
+        <div class="reveal-right max-w-5xl mx-auto">
+            <div class="group relative bg-black p-1 rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden hover:border-blue-500/30 transition-colors duration-500">
+                <div class="rounded-[2.2rem] overflow-hidden h-[500px] w-full relative">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.123!2d-69.94!3d18.47!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTjCsDI4JzEyLjAiTiA2OcKwNTYnMjQuMCJX!5e0!3m2!1ses!2sdo!4v1620000000000!5m2!1ses!2sdo" 
+                        width="100%" 
+                        height="100%" 
+                        style="border:0; filter: grayscale(0.8) invert(0.9) contrast(1.2);" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        class="w-full h-full">
+                    </iframe>
+                </div>
             </div>
             
-            <div class="flex items-start gap-4">
-              <div class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center flex-shrink-0">
-                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-bold mb-1">Teléfono</h4>
-                <p class="text-gray-400">(809) 555-VERTEX<br>WhatsApp: (829) 555-0100</p>
-              </div>
+        </div>
+    </div>
+</section>
+
+<footer class="relative bg-[#0a0a0a] border-t border-white/5 overflow-hidden">
+  <div class="absolute inset-0 z-0 opacity-20">
+    <img src="https://images.unsplash.com/photo-1616348436168-de43ad0db179?q=80&w=2000" alt="Fondo" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#0a0a0a]/80 to-[#0a0a0a]"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20">
+    <div class="grid grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
+      
+      <div class="col-span-2 lg:col-span-1">
+        <div class="text-3xl font-black mb-6 tracking-tighter text-white">VERTEX</div>
+        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+          Elevando tu experiencia tecnológica en República Dominicana con los equipos más potentes.
+        </p>
+        <div class="flex gap-3">
+          <a href="#" class="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all duration-300"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg></a>
+          <a href="#" class="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-pink-600 hover:text-white transition-all duration-300"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"></path></svg></a>
+          <a href="#" class="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center hover:bg-blue-700 hover:text-white transition-all duration-300"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"></path></svg></a>
+        </div>
+      </div>
+
+      <div class="col-span-1">
+        <h4 class="font-bold text-white mb-6 uppercase text-xs tracking-[0.2em]">Tienda</h4>
+        <ul class="space-y-4">
+          <li><a href="#" class="text-gray-400 hover:text-white hover:translate-x-2 transition-all inline-block text-sm">iPhone</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white hover:translate-x-2 transition-all inline-block text-sm">Samsung Galaxy</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white hover:translate-x-2 transition-all inline-block text-sm">Xiaomi Pro</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white hover:translate-x-2 transition-all inline-block text-sm">Accesorios Tech</a></li>
+        </ul>
+      </div>
+
+      <div class="col-span-1">
+        <h4 class="font-bold text-white mb-6 uppercase text-xs tracking-[0.2em]">Servicios</h4>
+        <ul class="space-y-4">
+          <li><a href="#" class="text-gray-400 hover:text-white hover:translate-x-2 transition-all inline-block text-sm">Envíos VIP</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white hover:translate-x-2 transition-all inline-block text-sm">Garantía Vertex</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white hover:translate-x-2 transition-all inline-block text-sm">Trade-In Center</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white hover:translate-x-2 transition-all inline-block text-sm">Financiamiento</a></li>
+        </ul>
+      </div>
+
+      <div class="col-span-2 lg:col-span-2">
+        <h4 class="font-bold text-white mb-6 uppercase text-xs tracking-[0.2em]">Ubicación y Contacto</h4>
+        <div class="space-y-4">
+          <div class="flex items-start gap-4">
+            <div class="mt-1 bg-white/5 p-2 rounded-lg text-blue-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
             </div>
-            
-            <div class="flex items-start gap-4">
-              <div class="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
-                <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-bold mb-1">Email</h4>
-                <p class="text-gray-400">ventas@vertex.com.do<br>soporte@vertex.com.do</p>
-              </div>
+            <div>
+              <p class="text-xs font-bold text-gray-300">Showroom Central (Ejemplo):</p>
+              <p class="text-sm text-gray-500 italic">Av. Winston Churchill 101, BlueMall 2do Nivel, Santo Domingo, DN.</p>
             </div>
-            
-            <div class="flex items-start gap-4">
-              <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center flex-shrink-0">
-                <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-              </div>
-              <div>
-                <h4 class="font-bold mb-1">Horario</h4>
-                <p class="text-gray-400">Lun - Vie: 9:00 AM - 7:00 PM<br>Sábados: 9:00 AM - 5:00 PM<br>Domingos: Cerrado</p>
-              </div>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="bg-white/5 p-2 rounded-lg text-green-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            </div>
+            <div>
+              <p class="text-sm text-gray-400">+1 (809) 8786-115</p>
             </div>
           </div>
         </div>
       </div>
-      
-      <div class="reveal-right">
-        <div class="bg-vertex-black rounded-3xl overflow-hidden border border-white/5 h-full min-h-[500px]">
-          <iframe 
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.3074888102704!2d-69.93153492505!3d18.468651982596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eaf89cf0ef1ab4b%3A0x9c7a4c6e4e1c8f4!2sAv.%20Winston%20Churchill%2C%20Santo%20Domingo!5e0!3m2!1ses!2sdo!4v1234567890123!5m2!1ses!2sdo" 
-            width="100%" 
-            height="500" 
-            style="border:0;" 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade"
-            class="w-full h-full min-h-[500px]">
-          </iframe>
-        </div>
-      </div>
     </div>
-  </div>
-</section>
 
-<footer class="bg-vertex-gray border-t border-white/5 py-20">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-      <div>
-        <div class="text-2xl font-black mb-6 tracking-tighter">VERTEX</div>
-        <p class="text-gray-400 mb-6">
-          Los mejores smartphones en República Dominicana desde 2024
-        </p>
-        <div class="flex gap-4">
-          <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
-          </a>
-          <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"></path></svg>
-          </a>
-          <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"></path></svg>
-          </a>
-        </div>
+    <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+        <p class="text-xs text-gray-500 uppercase tracking-widest font-bold">© 2026 VERTEX | República Dominicana</p>
       </div>
-      
-      <div>
-        <h4 class="font-bold mb-6">Tienda</h4>
-        <ul class="space-y-3">
-          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">iPhone</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Samsung</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Xiaomi</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Accesorios</a></li>
-        </ul>
-      </div>
-      
-      <div>
-        <h4 class="font-bold mb-6">Servicios</h4>
-        <ul class="space-y-3">
-          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Envíos</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Garantía</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Trade-In</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Financiamiento</a></li>
-        </ul>
-      </div>
-      
-      <div>
-        <h4 class="font-bold mb-6">Soporte</h4>
-        <ul class="space-y-3">
-          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Ayuda</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Preguntas Frecuentes</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contacto</a></li>
-          <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Estado de Orden</a></li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="separator mb-8"></div>
-    
-    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-      <p class="text-sm text-gray-400">
-        © 2026 VERTEX. Todos los derechos reservados. República Dominicana.
-      </p>
-      <div class="flex gap-6 text-sm">
-        <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacidad</a>
-        <a href="#" class="text-gray-400 hover:text-white transition-colors">Términos</a>
-        <a href="#" class="text-gray-400 hover:text-white transition-colors">Cookies</a>
+      <div class="flex gap-8">
+        <a href="#" class="text-[10px] uppercase font-bold text-gray-500 hover:text-white transition-colors tracking-widest">Privacidad</a>
+        <a href="#" class="text-[10px] uppercase font-bold text-gray-500 hover:text-white transition-colors tracking-widest">Términos</a>
+        <a href="#" class="text-[10px] uppercase font-bold text-gray-500 hover:text-white transition-colors tracking-widest">Garantía</a>
       </div>
     </div>
   </div>
 </footer>
 
 <script>
-gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger);
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn'), closeMobileMenu = document.getElementById('close-mobile-menu'), mobileMenu = document.getElementById('mobile-menu'), mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+  mobileMenuBtn.addEventListener('click', () => { mobileMenu.classList.add('active'); gsap.fromTo(mobileMenu, { x: '100%' }, { x: '0%', duration: 0.4, ease: 'power2.out' }); });
+  const closeMenu = () => { gsap.to(mobileMenu, { x: '100%', duration: 0.4, ease: 'power2.in', onComplete: () => { mobileMenu.classList.remove('active'); } }); };
+  closeMobileMenu.addEventListener('click', closeMenu);
+  mobileMenuLinks.forEach(link => link.addEventListener('click', closeMenu));
 
-const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-const closeMobileMenu = document.getElementById('close-mobile-menu');
-const mobileMenu = document.getElementById('mobile-menu');
-const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
-
-mobileMenuBtn.addEventListener('click', () => {
-  mobileMenu.classList.add('active');
-  gsap.fromTo(mobileMenu, 
-    { x: '100%' },
-    { x: '0%', duration: 0.4, ease: 'power2.out' }
-  );
-});
-
-closeMobileMenu.addEventListener('click', () => {
-  gsap.to(mobileMenu, {
-    x: '100%',
-    duration: 0.4,
-    ease: 'power2.in',
-    onComplete: () => {
-      mobileMenu.classList.remove('active');
-    }
+  gsap.utils.toArray('.reveal').forEach((element) => {
+    if (element.closest('#inicio')) return;
+    gsap.from(element, { scrollTrigger: { trigger: element, start: 'top 85%', toggleActions: 'play none none none' }, y: 50, opacity: 0, duration: 0.8, ease: 'power2.out' });
   });
-});
-
-mobileMenuLinks.forEach(link => {
-  link.addEventListener('click', () => {
-    gsap.to(mobileMenu, {
-      x: '100%',
-      duration: 0.4,
-      ease: 'power2.in',
-      onComplete: () => {
-        mobileMenu.classList.remove('active');
-      }
-    });
-  });
-});
-
-gsap.utils.toArray('.reveal').forEach((element) => {
-  if (element.closest('#inicio')) return;
-  
-  gsap.from(element, {
-    scrollTrigger: {
-      trigger: element,
-      start: 'top 85%',
-      toggleActions: 'play none none none'
-    },
-    y: 50,
-    opacity: 0,
-    duration: 0.8,
-    ease: 'power2.out'
-  });
-});
-
-gsap.utils.toArray('.reveal-left').forEach((element) => {
-  gsap.from(element, {
-    scrollTrigger: {
-      trigger: element,
-      start: 'top 85%',
-      toggleActions: 'play none none none'
-    },
-    x: -60,
-    opacity: 0,
-    duration: 1,
-    ease: 'power2.out'
-  });
-});
-
-gsap.utils.toArray('.reveal-right').forEach((element) => {
-  gsap.from(element, {
-    scrollTrigger: {
-      trigger: element,
-      start: 'top 85%',
-      toggleActions: 'play none none none'
-    },
-    x: 60,
-    opacity: 0,
-    duration: 1,
-    ease: 'power2.out'
-  });
-});
-
-gsap.utils.toArray('.reveal-scale').forEach((element) => {
-  gsap.from(element, {
-    scrollTrigger: {
-      trigger: element,
-      start: 'top 85%',
-      toggleActions: 'play none none none'
-    },
-    scale: 0.9,
-    opacity: 0,
-    duration: 1.2,
-    ease: 'power3.out',
-    delay: 0.5
-  });
-});
+  gsap.utils.toArray('.reveal-left').forEach((element) => { gsap.from(element, { scrollTrigger: { trigger: element, start: 'top 85%', toggleActions: 'play none none none' }, x: -60, opacity: 0, duration: 1, ease: 'power2.out' }); });
+  gsap.utils.toArray('.reveal-right').forEach((element) => { gsap.from(element, { scrollTrigger: { trigger: element, start: 'top 85%', toggleActions: 'play none none none' }, x: 60, opacity: 0, duration: 1, ease: 'power2.out' }); });
+  gsap.utils.toArray('.reveal-scale').forEach((element) => { gsap.from(element, { scrollTrigger: { trigger: element, start: 'top 85%', toggleActions: 'play none none none' }, scale: 0.9, opacity: 0, duration: 1.2, ease: 'power3.out', delay: 0.5 }); });
 </script>
-
 </body>
 </html>
