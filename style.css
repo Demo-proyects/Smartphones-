@@ -1,0 +1,730 @@
+/* ESTILOS GENERALES */
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+}
+
+body { 
+  font-family: 'Inter', sans-serif; 
+  -webkit-font-smoothing: antialiased; 
+  overflow-x: hidden; 
+  background: #0a0a0a; 
+  color: #ffffff; 
+}
+
+html { 
+  scroll-behavior: smooth; 
+}
+
+/* SCROLLBAR PERSONALIZADO */
+::-webkit-scrollbar { 
+  width: 8px; 
+}
+
+::-webkit-scrollbar-track { 
+  background: transparent; 
+}
+
+::-webkit-scrollbar-thumb { 
+  background: rgba(59, 130, 246, 0.5); 
+  border-radius: 4px; 
+}
+
+::-webkit-scrollbar-thumb:hover { 
+  background: rgba(59, 130, 246, 0.6); 
+}
+
+/* NAVEGACIÓN */
+.nav-link { 
+  position: relative; 
+  transition: color 0.3s ease; 
+}
+
+.nav-link::after { 
+  content: ''; 
+  position: absolute; 
+  bottom: -4px; 
+  left: 0; 
+  width: 0; 
+  height: 1px; 
+  background: currentColor; 
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+.nav-link:hover::after { 
+  width: 100%; 
+}
+
+/* GRADIENTES Y TEXTOS */
+.gradient-text { 
+  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%); 
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent; 
+  background-clip: text; 
+}
+
+/* TARJETAS DE PRODUCTOS */
+.phone-card { 
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+.phone-card:hover { 
+  transform: translateY(-8px); 
+}
+
+/* BOTONES */
+.magnetic-btn { 
+  position: relative; 
+  transition: transform 0.2s ease; 
+}
+
+/* ANIMACIONES DE REVELADO */
+.reveal { 
+  opacity: 1; 
+  transform: translateY(0); 
+}
+
+.reveal-left, .reveal-right { 
+  opacity: 1; 
+  transform: translateX(0); 
+}
+
+.reveal-scale { 
+  opacity: 1; 
+  transform: scale(1); 
+}
+
+/* GRIDS DE PRODUCTOS */
+.product-grid { 
+  display: grid; 
+  gap: 2rem; 
+}
+
+@media (min-width: 640px) { 
+  .product-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+  } 
+}
+
+@media (min-width: 1024px) { 
+  .product-grid { 
+    grid-template-columns: repeat(3, 1fr); 
+  } 
+}
+
+/* FONDOS INMERSIVOS */
+.immersive-bg { 
+  position: relative; 
+  overflow: hidden; 
+}
+
+.immersive-bg::before { 
+  content: ''; 
+  position: absolute; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%; 
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%); 
+  pointer-events: none; 
+}
+
+::selection { 
+  background: rgba(59, 130, 246, 0.2); 
+}
+
+/* SHIMMER LOADING */
+.loading-shimmer { 
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent); 
+  background-size: 200% 100%; 
+  animation: shimmer 2s infinite; 
+}
+
+@keyframes shimmer { 
+  0% { 
+    background-position: -200% 0; 
+  } 
+  100% { 
+    background-position: 200% 0; 
+  } 
+}
+
+/* BADGES */
+.badge { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 0.5rem; 
+  padding: 0.375rem 0.875rem; 
+  border-radius: 9999px; 
+  font-size: 0.75rem; 
+  font-weight: 500; 
+  letter-spacing: 0.025em; 
+  text-transform: uppercase; 
+}
+
+.price { 
+  font-variant-numeric: tabular-nums; 
+  letter-spacing: -0.02em; 
+}
+
+.separator { 
+  height: 1px; 
+  background: linear-gradient(90deg, transparent, currentColor, transparent); 
+  opacity: 0.1; 
+}
+
+/* ICONOS DE CARACTERÍSTICAS */
+.feature-icon { 
+  width: 48px; 
+  height: 48px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  border-radius: 12px; 
+  background: rgba(59, 130, 246, 0.1); 
+  transition: all 0.3s ease; 
+}
+
+.feature-icon:hover { 
+  background: rgba(59, 130, 246, 0.15); 
+  transform: translateY(-2px); 
+}
+
+/* MENÚ MÓVIL */
+.mobile-menu { 
+  position: fixed; 
+  top: 0; 
+  right: -100%; 
+  width: 100%; 
+  height: 100vh; 
+  background: #0a0a0a; 
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+  z-index: 999; 
+}
+
+.mobile-menu.active { 
+  right: 0; 
+}
+
+.stat-number { 
+  font-variant-numeric: tabular-nums; 
+  font-feature-settings: 'tnum'; 
+}
+
+/* ASPECT RATIOS */
+.aspect-phone { 
+  aspect-ratio: 9 / 16; 
+}
+
+.aspect-square { 
+  aspect-ratio: 1 / 1; 
+}
+
+.aspect-wide { 
+  aspect-ratio: 16 / 9; 
+}
+
+/* OVERLAY GRADIENTE */
+.overlay-gradient { 
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.95) 100%); 
+}
+
+.hero-bg-pattern { 
+  position: absolute; 
+  inset: 0; 
+  background-image: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%), 
+                    radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%); 
+}
+
+/* BADGE DEL CARRITO */
+.cart-badge { 
+  position: absolute; 
+  top: -8px; 
+  right: -8px; 
+  background: #ef4444; 
+  color: white; 
+  font-size: 0.75rem; 
+  font-weight: 600; 
+  width: 20px; 
+  height: 20px; 
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+}
+
+/* GRID E-COMMERCE */
+.ecommerce-grid { 
+  display: grid; 
+  gap: 1.25rem; 
+  grid-template-columns: repeat(2, 1fr); 
+}
+
+@media (min-width: 768px) { 
+  .ecommerce-grid { 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 1.5rem; 
+  } 
+}
+
+@media (min-width: 1024px) { 
+  .ecommerce-grid { 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 2rem; 
+  } 
+}
+
+/* TARJETAS DE PRODUCTOS */
+.product-card { 
+  background: #1a1a1a; 
+  border-radius: 1rem; 
+  overflow: hidden; 
+  transition: all 0.3s ease; 
+  border: 1px solid rgba(255,255,255,0.05); 
+}
+
+.product-card:hover { 
+  transform: translateY(-8px); 
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3); 
+}
+
+.product-image-container { 
+  position: relative; 
+  width: 100%; 
+  height: 240px; 
+  overflow: hidden; 
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%); 
+}
+
+.product-image-container img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  transition: transform 0.6s ease; 
+}
+
+.product-card:hover .product-image-container img { 
+  transform: scale(1.1); 
+}
+
+/* BADGE DE STOCK */
+.stock-badge { 
+  position: absolute; 
+  top: 12px; 
+  left: 12px; 
+  padding: 4px 12px; 
+  border-radius: 20px; 
+  font-size: 0.75rem; 
+  font-weight: 600; 
+  background: rgba(16, 185, 129, 0.9); 
+  color: white; 
+  backdrop-filter: blur(10px); 
+}
+
+.stock-badge.limited { 
+  background: rgba(245, 158, 11, 0.9); 
+}
+
+.stock-badge.out { 
+  background: rgba(239, 68, 68, 0.9); 
+}
+
+/* BOTÓN AGREGAR AL CARRITO */
+.add-to-cart { 
+  width: 100%; 
+  padding: 0.75rem; 
+  background: white; 
+  color: #0a0a0a; 
+  font-weight: 600; 
+  border-radius: 0.5rem; 
+  transition: all 0.3s ease; 
+  border: none; 
+  cursor: pointer; 
+}
+
+.add-to-cart:hover { 
+  transform: translateY(-2px); 
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15); 
+}
+
+.add-to-cart:disabled { 
+  opacity: 0.5; 
+  cursor: not-allowed; 
+}
+
+/* ANIMACIÓN REVEAL UP */
+@keyframes revealUp { 
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  } 
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  } 
+}
+
+.reveal-card { 
+  opacity: 0; 
+  animation: revealUp 0.6s ease-out forwards; 
+}
+
+.delay-1 { 
+  animation-delay: 0.1s; 
+}
+
+.delay-2 { 
+  animation-delay: 0.2s; 
+}
+
+.delay-3 { 
+  animation-delay: 0.3s; 
+}
+
+/* MODAL ANIMATIONS & STYLES */
+@keyframes fadeIn { 
+  from { 
+    opacity: 0; 
+  } 
+  to { 
+    opacity: 1; 
+  } 
+}
+
+@keyframes slideDown { 
+  from { 
+    opacity: 0; 
+    transform: translateY(-50px); 
+  } 
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  } 
+}
+
+.modal-overlay { 
+  animation: fadeIn 0.4s ease-out; 
+}
+
+.modal-content { 
+  animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1); 
+}
+
+.luxury-gradient { 
+  background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%); 
+}
+
+.audio-player-luxury { 
+  background: linear-gradient(180deg, #181818 0%, #121212 100%); 
+}
+
+audio { 
+  display: none; 
+}
+
+/* GRADIENT TEXT ANIMATED */
+.gradient-text { 
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6); 
+  background-size: 300% 100%; 
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent; 
+  background-clip: text; 
+  animation: gradientFlow 4s ease infinite; 
+}
+
+@keyframes gradientFlow { 
+  0%, 100% { 
+    background-position: 0% 50%; 
+  } 
+  50% { 
+    background-position: 100% 50%; 
+  } 
+}
+
+/* SHOP UPDATES */
+.filters-container { 
+  display: flex; 
+  gap: 0.75rem; 
+  overflow-x: auto; 
+  padding: 0.5rem; 
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+.filters-container::-webkit-scrollbar { 
+  display: none; 
+}
+
+.filter-btn { 
+  flex-shrink: 0; 
+  white-space: nowrap; 
+  transition: all 0.3s ease; 
+}
+
+.active-filter { 
+  background: white !important; 
+  color: black !important; 
+  border: none !important; 
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1); 
+}
+
+@media (min-width: 640px) and (max-width: 1023px) { 
+  .grid-cols-2 { 
+    grid-template-columns: repeat(2, minmax(0, 1fr)); 
+    gap: 1.5rem; 
+  } 
+}
+
+@media (min-width: 1024px) { 
+  .grid-cols-4 { 
+    grid-template-columns: repeat(4, minmax(0, 1fr)); 
+  } 
+}
+
+/* PRODUCT CARD ENHANCED */
+.product-card { 
+  opacity: 1 !important; 
+  transform: none !important; 
+  animation: none !important; 
+  background: rgba(26, 26, 26, 0.8); 
+  backdrop-filter: blur(10px); 
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  transition: all 0.3s ease; 
+}
+
+.product-card:hover { 
+  border-color: rgba(255, 255, 255, 0.2); 
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); 
+  transform: translateY(-4px); 
+}
+
+.product-image-container { 
+  position: relative; 
+  width: 100%; 
+  height: 260px; 
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%); 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 1.5rem; 
+  overflow: hidden; 
+}
+
+.product-image-container img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: contain; 
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+.product-card:hover .product-image-container img { 
+  transform: scale(1.08); 
+}
+
+.product-specs { 
+  display: -webkit-box; 
+  -webkit-line-clamp: 2; 
+  -webkit-box-orient: vertical; 
+  overflow: hidden; 
+  min-height: 2.5rem; 
+}
+
+.stock-badge { 
+  position: absolute; 
+  top: 12px; 
+  left: 12px; 
+  z-index: 10; 
+  backdrop-filter: blur(10px); 
+}
+
+.no-results { 
+  grid-column: 1 / -1; 
+  text-align: center; 
+  padding: 3rem 1rem; 
+  background: rgba(26, 26, 26, 0.5); 
+  border-radius: 1rem; 
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+}
+
+.price { 
+  background: linear-gradient(135deg, #ffffff 0%, #d1d5db 100%); 
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent; 
+  background-clip: text; 
+}
+
+/* CLASES PARA ANIMACIONES DE SCROLL */
+.section-animated {
+  will-change: transform, opacity;
+}
+
+/* FIX PARA VISIBILIDAD PERMANENTE DESPUÉS DE ANIMACIÓN */
+.permanent-visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+
+/* OCULTAR SCROLLBAR EN ALGUNOS ELEMENTOS */
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* TOAST DE STOCK - DISEÑO ORIGINAL MEJORADO */
+#toast-stock {
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+#toast-stock > div {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(10, 10, 10, 0.85);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+              0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Animación sutil de latido para el punto */
+@keyframes gentle-pulse {
+  0%, 100% { 
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+#toast-stock .animate-pulse {
+  animation: gentle-pulse 1.5s ease-in-out infinite;
+}
+
+/* Efecto hover sutil para el toast */
+#toast-stock > div:hover {
+  background: rgba(15, 15, 15, 0.9);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+  transition: all 0.3s ease;
+}
+
+
+  /* Aplicar a toda la página */
+  html, body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE y Edge */
+  }
+
+  /* Para navegadores basados en Webkit (Chrome, Safari, Brave) */
+  ::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  /* =========================================== */
+/* OPTIMIZACIÓN DE IMÁGENES - CARGA RÁPIDA */
+/* =========================================== */
+
+/* 1. ESTILOS PARA LAZY LOADING */
+.lazyload,
+.lazyloading {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.lazyloaded {
+  opacity: 1;
+}
+
+/* 2. EFECTO BLUR-UP (Low Quality Image Placeholder) */
+.blur-up {
+  filter: blur(10px);
+  transition: filter 0.3s ease;
+}
+
+.blur-up.lazyloaded {
+  filter: blur(0);
+}
+
+/* 3. CONTENEDORES DE IMÁGENES CON ASPECT RATIO */
+.img-container {
+  position: relative;
+  overflow: hidden;
+  background-color: #1a1a1a; /* Color de fondo mientras carga */
+}
+
+.img-container::before {
+  content: '';
+  display: block;
+  padding-top: 75%; /* Ajusta según aspect ratio (4:3 = 75%, 16:9 = 56.25%) */
+}
+
+.img-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 4. PRELOAD CRÍTICO (imágenes del hero/fold) */
+.critical-img {
+  /* Estas se cargan inmediatamente */
+  font-family: "object-fit: cover;"; /* Polyfill para object-fit */
+}
+
+/* 5. IMÁGENES DE FONDO OPTIMIZADAS */
+.lazy-bg {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.lazy-bg.loaded {
+  animation: bgFadeIn 0.5s ease;
+}
+
+@keyframes bgFadeIn {
+  from { opacity: 0.8; }
+  to { opacity: 1; }
+}
+
+/* 6. SKELETON LOADER (Placeholder mientras carga) */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #1a1a1a 25%,
+    #2a2a2a 50%,
+    #1a1a1a 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 7. PREVENIR LAYOUT SHIFT */
+.stable-layout {
+  aspect-ratio: attr(width) / attr(height);
+}
+
+/* 8. OPTIMIZACIÓN PARA RETINA */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .retina-optimized {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
